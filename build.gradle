@@ -52,15 +52,3 @@ subprojects {// 각 모듈에 적용할 공통 설정
         useJUnitPlatform()
     }
 }
-
-project(':cubco-external') { // 컴파일 시 cubco-common 로딩
-    dependencies {
-        implementation project(':cubco-common')
-    }
-}
-
-project(':cubco-domain') { // 컴파일 시 cubco-common 로딩
-    dependencies {
-        implementation project(':cubco-common')
-    }
-}
