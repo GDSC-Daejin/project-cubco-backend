@@ -7,3 +7,7 @@ dependencies {
 }
 
 jar.enabled = false
+bootJar.enabled = true
+bootJar {
+    archiveFileName = 'cubco-api-0.0.1-SNAPSHOT.jar'
+}
