@@ -38,7 +38,7 @@ public class JWTutil {
                 .claim("sub", userId)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredms))
-                .claim("roles", role)
+                .claim("roles", "ROLE_"+role)
                 .signWith(secretKey)
                 .compact();
     }
