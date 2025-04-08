@@ -1,0 +1,9 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation project(path: ':cubco-common')
+    implementation project(path: ':cubco-domain')
+    implementation project(path: ':cubco-external')
+}
+
+jar.enabled = false
