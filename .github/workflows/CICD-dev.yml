@@ -40,7 +40,7 @@ jobs:
       - name: Grant execute permission and build with Gradle (without Test)
         run: |
           chmod +x gradlew
-          ./gradlew clean build -x test --parallel
+          ./gradlew clean :cubco-api:bootJar -x test --parallel
         working-directory: ${{ env.working-directory }}
         shell: bash
 
