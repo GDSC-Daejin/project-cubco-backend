@@ -56,7 +56,7 @@ jobs:
 
       - name: Docker Hub build & push
         run: |
-          docker build ${{ secrets.DOCKER_USERNAME }}/cubco-server --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/cubco-server .
+          docker build --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/cubco-server .
           docker push ${{ secrets.DOCKER_USERNAME }}/cubco-server
         working-directory: ${{ env.working-directory }}
 
