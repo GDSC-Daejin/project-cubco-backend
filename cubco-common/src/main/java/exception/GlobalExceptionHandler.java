@@ -1,4 +1,4 @@
-package org.cubco.config;
+package org.cubco.common.exception;
 
 import org.cubco.common.exception.CustomException;
 import org.cubco.common.exception.ErrorCode;

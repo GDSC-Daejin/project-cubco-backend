@@ -1,4 +1,4 @@
-package org.cubco-common.response;
+package org.cubco.common.response;
 
 public class CommonResponse<T> {
     private boolean success;

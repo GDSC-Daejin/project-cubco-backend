@@ -1,5 +1,6 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0' // Swagger
 
     implementation project(path: ':cubco-common')
     implementation project(path: ':cubco-domain')
@@ -7,3 +8,7 @@ dependencies {
 }
 
 jar.enabled = false
+bootJar.enabled = true
+bootJar {
+    archiveFileName = 'cubco-api-0.0.1-SNAPSHOT.jar'
+}
