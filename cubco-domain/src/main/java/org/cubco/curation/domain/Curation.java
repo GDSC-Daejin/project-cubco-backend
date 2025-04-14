@@ -1,0 +1,39 @@
+package org.cubco.curation.domain;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.cubco.common.BaseTimeEntity;
+
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+@Getter
+@Table(name = "curations")
+public class Curation extends BaseTimeEntity {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "curation_id")
+    private Long id;
+
+    @NotNull
+    @Column(name = "title")
+    private String title;
+
+    @NotNull
+    @Column(name = "content")
+    private String content;
+
+    @Builder.Default
+    @NotNull
+    @Column(name = "report_count")
+    private int reportCount = 0;
+
+    public static Curation create(String title, String content, int reportCount) {
+        return Curation.builder()
+                .title(title)
+                .content(content)
+                .reportCount(reportCount)
+                .build();
+    }
+}
