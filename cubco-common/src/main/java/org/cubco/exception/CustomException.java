@@ -1,6 +1,4 @@
-package org.cubco.common.exception;
-
-import org.cubco.common.exception.ErrorCode;
+package org.cubco.exception;
 
 public abstract class CustomException extends RuntimeException {
     private final ErrorCode errorCode;

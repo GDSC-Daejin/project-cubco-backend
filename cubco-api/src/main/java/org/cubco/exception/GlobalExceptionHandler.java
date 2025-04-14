@@ -1,12 +1,12 @@
-package org.cubco.common.exception;
+package org.cubco.exception;
 
-import org.cubco.common.exception.CustomException;
-import org.cubco.common.exception.ErrorCode;
-import org.cubco.common.response.CommonResponse;
+import io.swagger.v3.oas.annotations.Hidden;
+import org.cubco.response.CommonResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Hidden
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
     // 그 외 예외 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CommonResponse<Void>> handleException(Exception ex) {
+        ex.printStackTrace(); // ★ 콘솔에 전체 예외 메시지 출력
         ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
         return ResponseEntity
                 .status(errorCode.getHttpStatus())

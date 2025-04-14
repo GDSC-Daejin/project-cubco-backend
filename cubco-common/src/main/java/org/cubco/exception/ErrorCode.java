@@ -1,4 +1,4 @@
-package org.cubco.common.exception;
+package org.cubco.exception;
 
 import org.springframework.http.HttpStatus;
 
