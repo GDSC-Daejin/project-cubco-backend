@@ -28,6 +28,7 @@ public class TestController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
+
     @GetMapping("/error")
     public CommonResponse<Void> error() {
         throw new CustomException(ErrorCode.INVALID_REQUEST) {};
