@@ -1,0 +1,77 @@
+name: CICD
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-22.04
+    env:
+      working-directory: .
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+
+      - name: Gradle Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Create application.yml
+        run: |
+          mkdir -p cubco-api/src/main/resources && cd $_
+          touch ./application.yml
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
+          cat ./application.yml
+        working-directory: ${{ env.working-directory }}
+
+      - name: Grant execute permission and build with Gradle (without Test)
+        run: |
+          chmod +x gradlew
+          ./gradlew clean :cubco-api:bootJar -x test --parallel
+        working-directory: ${{ env.working-directory }}
+        shell: bash
+
+
+      - name: Docker login
+        uses: docker/setup-buildx-action@v2.9.1
+
+      - name: Docker hub login
+        uses: docker/login-action@v2.2.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_ACCESSTOKEN }}
+
+      - name: Docker Hub build & push
+        run: |
+          docker build --platform linux/amd64 -t ${{ secrets.DOCKER_USERNAME }}/cubco-server .
+          docker push ${{ secrets.DOCKER_USERNAME }}/cubco-server
+        working-directory: ${{ env.working-directory }}
+
+  cd:
+    needs: ci
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Deploy to Prod WAS Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            cd ~
+            ./deploy.sh
+            sudo docker image prune -f
