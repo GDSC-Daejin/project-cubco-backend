@@ -21,12 +21,12 @@ public class CommonResponse<T> {
     private String message; // 사용자 메시지
     private String code;    // 에러 코드 (예: USER_NOT_FOUND, VALIDATION_FAILED)
 
-    public static <T> CommonResponse<T> createSuccess(T data) {
-        return new CommonResponse<>(SUCCESS_STATUS, data, null, null);
+    public static <T> CommonResponse<T> createSuccess(String message, T data) {
+        return new CommonResponse<>(SUCCESS_STATUS, data, message, null);
     }
 
-    public static CommonResponse<?> createSuccessWithNoContent() {
-        return new CommonResponse<>(SUCCESS_STATUS, null, null, null);
+    public static CommonResponse<?> createSuccessWithNoContent(String message) {
+        return new CommonResponse<>(SUCCESS_STATUS, null, message, null);
     }
 
     // 예외 발생으로 API 호출 실패시 반환
