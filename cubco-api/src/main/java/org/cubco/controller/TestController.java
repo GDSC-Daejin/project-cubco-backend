@@ -19,8 +19,8 @@ public class TestController {
             @ApiResponse(responseCode = "200", description = "요청 성공")
     })
     @GetMapping("/success")
-    public CommonResponse<String> success() {
-        return CommonResponse.success("요청 성공!");
+    public CommonResponse<String> createUser() {
+        return CommonResponse.createSuccess("성공");
     }
 
     @Operation(summary = "예외 응답 테스트", description = "예외 발생 시 GlobalExceptionHandler가 작동하는지 확인합니다.")

@@ -16,10 +16,9 @@ public class SwaggerConfig {
     }
 
     private Info apiInfo() {
-        System.out.println("● apiInfo 메소드 실행 ●");
         return new Info()
-                .title("Cubco Swagger")
-                .description("Cubco Backend REST API")
+                .title("CubCo Swagger")
+                .description("CubCo Backend REST API")
                 .version("1.0.0");
     }
 }
