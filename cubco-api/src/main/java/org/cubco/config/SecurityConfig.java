@@ -1,10 +1,14 @@
 package org.cubco.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.cubco.filter.JwtAuthenticationFilter;
 import org.cubco.security.CustomAccessDeniedHandler;
+import org.cubco.util.JWTutil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,13 +20,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final CustomAccessDeniedHandler accessDeniedHandler;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    private JWTutil jwTutil;
 
     @Autowired
     public SecurityConfig(CustomAccessDeniedHandler accessDeniedHandler,
-                          JwtAuthenticationFilter jwtAuthenticationFilter) {
+                          JWTutil jwTutil) {
         this.accessDeniedHandler = accessDeniedHandler;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.jwTutil = jwTutil;
     }
 
     @Bean
@@ -34,7 +39,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .exceptionHandling(exception -> exception
-                        .accessDeniedHandler(accessDeniedHandler));
+                        .accessDeniedHandler(accessDeniedHandler)); //인가 예외처리
+
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -46,7 +52,7 @@ public class SecurityConfig {
                                 "/swagger-resources/**"
                         ).permitAll()
                         .anyRequest().hasRole("ADMIN"))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwTutil), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

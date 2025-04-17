@@ -30,19 +30,18 @@ import java.util.Map;
 
 @Slf4j
 @Component
-@PropertySource("classpath:security.properties")
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
     private JWTutil jwTutil;
 
-    @Value("${jwt.header}")
-    private String authorizationHeader;
+    public JwtAuthenticationFilter(JWTutil jwTutil) {
+        this.jwTutil = jwTutil;
+    }
 
-    private void handleAuthenticationError(HttpServletResponse response, CommonResponse<Void> errorResponse) throws IOException {
+
+    private void handleAuthenticationError(HttpServletResponse response, CommonResponse<?> errorResponse) throws IOException {
         response.setStatus(ErrorCode.UNAUTHORIZED.getHttpStatus().value());
         response.setContentType("application/json;charset=UTF-8");
-
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonResponse = objectMapper.writeValueAsString(errorResponse);
         response.getWriter().write(jsonResponse);
@@ -50,22 +49,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = request.getHeader(authorizationHeader);
-
-        if (token == null || !token.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+            String token = request.getHeader("Authorization");
 
         try {
+            if (token == null || !token.startsWith("Bearer ")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             token = token.substring(7);
-            Long userId = jwTutil.getUserId(token);
+            String userId = jwTutil.getUserId(token);
             String role = jwTutil.getRole(token);
 
             if (jwTutil.isExpired(token)) {
-                CommonResponse<Void> errorResponse = CommonResponse.fail(
-                        ErrorCode.TOKEN_EXPIRED.getCode()
-                        ,ErrorCode.TOKEN_EXPIRED.getMessage());
+                CommonResponse<?> errorResponse = CommonResponse.createError("유효기간이 만료된 토큰입니다.");
                 handleAuthenticationError(response, errorResponse);
                 return;
             }
@@ -77,14 +74,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            filterChain.doFilter(request, response);
         } catch (Exception e) {
-            CommonResponse<Void> errorResponse = CommonResponse.fail(
-                    ErrorCode.TOKEN_INVALID.getCode()
-                    ,ErrorCode.TOKEN_INVALID.getMessage());
+            CommonResponse<?> errorResponse = CommonResponse.createError("유효하지 않은 토큰입니다.");
             handleAuthenticationError(response, errorResponse);
-            return;
         }
-
-        filterChain.doFilter(request, response);
     }
 }

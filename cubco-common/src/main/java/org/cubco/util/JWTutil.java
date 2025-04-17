@@ -20,8 +20,8 @@ public class JWTutil {
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
-    public Long getUserId(String token){
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", Long.class);
+    public String getUserId(String token){
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", String.class);
     }
 
     public String getRole(String token){
@@ -32,7 +32,7 @@ public class JWTutil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createToken(Long userId, String role, Long expiredms){
+    public String createToken(String userId, String role, Long expiredms){
         return Jwts.builder()
                 .claim("iss", "cubco")
                 .claim("sub", userId)

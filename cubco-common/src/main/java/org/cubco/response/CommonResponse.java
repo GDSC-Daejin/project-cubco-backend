@@ -1,55 +1,49 @@
 package org.cubco.response;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommonResponse<T> {
-    private boolean success;
-    private String code;
-    private String message;
-    private T data;
+    private static final String SUCCESS_STATUS = "success";
+    private static final String ERROR_STATUS = "error";
 
-    public CommonResponse() {}
+    private String status; // success, error
+    private T data; // 성공 데이터 or 에러 상세정보
+    private String message; // 사용자 메시지
 
-    public CommonResponse(boolean success, String code, String message, T data) {
-        this.success = success;
-        this.code = code;
+    public static <T> CommonResponse<T> createSuccess(String message, T data) {
+        return new CommonResponse<>(SUCCESS_STATUS, message, data);
+    }
+
+    public static CommonResponse<?> createSuccessWithNoContent(String message) {
+        return new CommonResponse<>(SUCCESS_STATUS, message, null);
+    }
+
+    // 예외 발생으로 API 호출 실패시 반환
+    public static CommonResponse<?> createError(String message) {
+        return new CommonResponse<>(ERROR_STATUS, message, null);
+    }
+
+    // 유효성 검증 예외
+    public static CommonResponse<?> createValidationError(BindingResult bindingResult) {
+        Map<String, String> fieldErrors = new HashMap<>();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            fieldErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return new CommonResponse<>(ERROR_STATUS, "요청 데이터가 유효하지 않습니다.", fieldErrors);
+    }
+
+    private CommonResponse(String status, String message, T data) {
+        this.status = status;
         this.message = message;
-        this.data = data;
-    }
-
-    // 성공 응답 생성
-    public static <T> CommonResponse<T> success(T data) {
-        return new CommonResponse<>(true, null, "요청에 성공하였습니다.", data);
-    }
-
-    public static <T> CommonResponse<T> success(String message, T data) {
-        return new CommonResponse<>(true, null, message, data);
-    }
-
-    // 실패 응답 생성
-    public static <T> CommonResponse<T> fail(String code, String message) {
-        return new CommonResponse<>(false, code, message, null);
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setData(T data) {
         this.data = data;
     }
 }
