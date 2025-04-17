@@ -35,6 +35,14 @@ public class JWTutil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("roles", String.class);
     }
 
+    public Date getCurrentDate() {
+        return new Date(System.currentTimeMillis());
+    }
+
+    public Date getExpirationDate() {
+        return new Date(getCurrentDate().getTime() + expiredms);
+    }
+
     public Boolean isExpired(String token){
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
@@ -49,11 +57,12 @@ public class JWTutil {
         }
     }
 
+
     public String createToken(Long userId, String role){
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiredms))
+                .issuedAt(getCurrentDate())
+                .expiration(getExpirationDate())
                 .claim("roles", "ROLE_"+role)
                 .signWith(secretKey)
                 .compact();
