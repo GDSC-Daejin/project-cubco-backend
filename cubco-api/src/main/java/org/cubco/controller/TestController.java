@@ -16,11 +16,8 @@ public class TestController {
     @Autowired
     private JWTutil jwTutil;
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
-
     @GetMapping("/jwt")
     public String createJwt() {
-        return jwTutil.createToken(20211476L, "ADMIN", expiration);
+        return jwTutil.createToken(20211476L, "ADMIN");
     }
 }

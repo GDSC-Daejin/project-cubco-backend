@@ -15,12 +15,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
+@PropertySource("classpath:security.properties")
 public class JWTutil {
 
     private final SecretKey secretKey;
+    private final int expiredms;
 
     @Autowired
-    public JWTutil(SecretKey secretKey){
+    public JWTutil(SecretKey secretKey, @Value("${jwt.expiration}")int expiredms){
+        this.expiredms = expiredms;
         this.secretKey = secretKey;
     }
 
@@ -46,7 +49,7 @@ public class JWTutil {
         }
     }
 
-    public String createToken(Long userId, String role, Long expiredms){
+    public String createToken(Long userId, String role){
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
                 .issuedAt(new Date(System.currentTimeMillis()))
