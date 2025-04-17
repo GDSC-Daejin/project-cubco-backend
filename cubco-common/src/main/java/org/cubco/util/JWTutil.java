@@ -32,10 +32,9 @@ public class JWTutil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createToken(String userId, String role, Long expiredms){
+    public String createToken(Long userId, String role, Long expiredms){
         return Jwts.builder()
-                .claim("iss", "cubco")
-                .claim("sub", userId)
+                .setSubject(String.valueOf(userId))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredms))
                 .claim("roles", "ROLE_"+role)

@@ -20,7 +20,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(ErrorCode.FORBIDDEN.getHttpStatus().value());
         response.setContentType("application/json;charset=UTF-8");
 
-        CommonResponse<?> errorResponse = CommonResponse.createError("Access denied");
+        CommonResponse<?> errorResponse = CommonResponse.createError("접근 권한이 없습니다");
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonResponse = objectMapper.writeValueAsString(errorResponse);

@@ -21,6 +21,6 @@ public class TestController {
 
     @GetMapping("/jwt")
     public String createJwt() {
-        return jwTutil.createToken("20250417", "ADMIN", expiration);
+        return jwTutil.createToken(20211476L, "ADMIN", expiration);
     }
 }
