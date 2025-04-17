@@ -1,6 +1,7 @@
 package org.cubco.util;
 
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -11,13 +12,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
-@PropertySource("classpath:security.properties")
 public class JWTutil {
 
-    private SecretKey secretKey;
+    private final SecretKey secretKey;
 
-    public JWTutil(@Value("${jwt.secret}")String secret){
-        this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+    @Autowired
+    public JWTutil(SecretKey secretKey){
+        this.secretKey = secretKey;
     }
 
     public String getUserId(String token){
