@@ -12,7 +12,6 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommonResponse<T> {
-
     private static final String SUCCESS_STATUS = "success";
     private static final String ERROR_STATUS = "error";
 
