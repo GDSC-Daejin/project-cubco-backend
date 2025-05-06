@@ -1,9 +1,9 @@
-package org.cubco.config;
+package org.cubco.auth.config;
 
 import io.jsonwebtoken.Jwts;
-import org.cubco.filter.JwtAuthenticationFilter;
-import org.cubco.security.CustomAccessDeniedHandler;
-import org.cubco.util.JWTutil;
+import org.cubco.auth.filter.JwtAuthenticationFilter;
+import org.cubco.auth.security.CustomAccessDeniedHandler;
+import org.cubco.auth.jwt.JWTutil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
