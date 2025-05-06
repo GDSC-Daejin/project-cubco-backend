@@ -1,9 +1,5 @@
 package org.cubco.controller;
 
-import org.cubco.util.JWTutil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -11,23 +7,7 @@ import org.cubco.response.CommonResponse;
 import org.cubco.exception.CustomException;
 import org.cubco.exception.ErrorCode;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/test")
-@PropertySource("classpath:security.properties")
-public class TestController {
-
-    @Autowired
-    private JWTutil jwTutil;
-
-    @GetMapping("/jwt")
-    public String createJwt() {
-        return jwTutil.createToken(20211476L, "ADMIN");
-    }
-}
-=======
 public class TestController {
 
     @Operation(summary = "Response 테스트", description = "공통 응답 객체가 잘 동작하는지 확인합니다.")
