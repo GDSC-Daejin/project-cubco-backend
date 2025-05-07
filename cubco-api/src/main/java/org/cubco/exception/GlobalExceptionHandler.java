@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ex.getErrorCode();
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(CommonResponse.createError(errorCode.getCode(), errorCode.getMessage()));
+                .body(CommonResponse.createError(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 
     // [2] 예상치 못한 서버 내부 예외 처리
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(CommonResponse.createError(errorCode.getCode(), errorCode.getMessage()));
+                .body(CommonResponse.createError(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 
     // [3] DTO 유효성 검사 실패 (ex: @Valid)
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.METHOD_NOT_ALLOWED;
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(CommonResponse.createError(errorCode.getCode(), errorCode.getMessage()));
+                .body(CommonResponse.createError(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 
     // [5] JSON 파싱 오류 (ex: 잘못된 형식의 JSON Body)
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.INVALID_REQUEST;
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(CommonResponse.createError(errorCode.getCode(), errorCode.getMessage()));
+                .body(CommonResponse.createError(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 
     // [6] 필수 쿼리 파라미터 누락
@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.MISSING_REQUIRED_FIELD;
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(CommonResponse.createError(errorCode.getCode(), errorCode.getMessage()));
+                .body(CommonResponse.createError(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 
     // [7] 단일 필드 유효성 검증 실패 (ex: @RequestParam 검증)
@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.INVALID_INPUT_VALUE;
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(CommonResponse.createError(errorCode.getCode(), errorCode.getMessage()));
+                .body(CommonResponse.createError(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 
     // [8] 접근 권한 없음 (인가 실패)
@@ -98,6 +98,6 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.ACCESS_DENIED;
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(CommonResponse.createError(errorCode.getCode(), errorCode.getMessage()));
+                .body(CommonResponse.createError(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage()));
     }
 }
