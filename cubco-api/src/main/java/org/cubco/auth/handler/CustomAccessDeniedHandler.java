@@ -1,4 +1,4 @@
-package org.cubco.security;
+package org.cubco.auth.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
