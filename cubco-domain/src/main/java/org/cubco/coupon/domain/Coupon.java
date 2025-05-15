@@ -7,6 +7,8 @@ import org.cubco.cafe.domain.Cafe;
 import org.cubco.common.BaseTimeEntity;
 import org.cubco.user.domain.User;
 
+import java.time.LocalTime;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
@@ -41,5 +43,13 @@ public class Coupon extends BaseTimeEntity {
                 .count(count)
                 .imageUrl(imageUrl)
                 .build();
+    }
+
+    public void updateImage(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void updateCount(int count) {
+        this.count = count;
     }
 }
