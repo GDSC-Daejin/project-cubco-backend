@@ -1,7 +1,7 @@
 package org.cubco.exception;
 
 public class CouponForbiddenException extends CustomException {
-    public CouponForbiddenException(String message) {
+    public CouponForbiddenException() {
         super(ErrorCode.FORBIDDEN);
     }
 }

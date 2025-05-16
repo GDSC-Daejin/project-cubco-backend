@@ -1,6 +1,7 @@
 package org.cubco.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cubco.coupon.domain.Coupon;
 import org.cubco.dto.coupon.CouponDetailResponse;
 import org.cubco.dto.coupon.CouponResponse;
@@ -9,7 +10,6 @@ import org.cubco.exception.CustomException;
 import org.cubco.exception.ErrorCode;
 import org.cubco.policy.CouponOwnershipPolicy;
 import org.cubco.policy.CouponRemainingCountPolicy;
-import org.cubco.policy.CouponUsePolicy;
 import org.cubco.repository.CouponRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CouponService {
@@ -46,7 +47,7 @@ public class CouponService {
 
     // [3] 쿠폰 이미지 수정
     @Transactional
-    public void updateCouponImage(Long userId, Long couponId, String imageUrl) {
+    public CouponDetailResponse updateCouponImage(Long userId, Long couponId, String imageUrl) {
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new CouponNotFoundException());
 
@@ -54,16 +55,19 @@ public class CouponService {
         ownershipPolicy.validateCouponOwner(coupon, userId);
 
         coupon.updateImage(imageUrl);
+
+        return CouponDetailResponse.of(coupon);
     }
 
     // [4] 쿠폰 사용 처리 (count 차감)
     @Transactional
-    public void useCoupon(Long userId, Long couponId, Integer count) {
+    public void useCoupon(Long userId, Long couponId, int count) {
         Coupon coupon = couponRepository.findByUserIdAndId(userId, couponId)
                 .orElseThrow(() -> new CouponNotFoundException());
 
-        // 수정 권한이 있는지 검증 + count수가 적절한지 검증
+        // 수정 권한이 있는지 검증
         ownershipPolicy.validateCouponOwner(coupon, userId);
+        // count 수가 적절한지 검증
         countPolicy.validateCouponCount(coupon, count);
 
         coupon.updateCount(count);

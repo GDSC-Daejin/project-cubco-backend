@@ -1,21 +1,24 @@
 package org.cubco.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cubco.dto.coupon.CouponDetailResponse;
 import org.cubco.dto.coupon.CouponImageUpdateRequest;
 import org.cubco.dto.coupon.CouponResponse;
 import org.cubco.dto.coupon.CouponUseRequest;
 import org.cubco.response.CommonResponse;
 import org.cubco.service.CouponService;
+import org.cubco.swagger.CouponApiDocs;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/coupons")
-public class CouponController {
+public class CouponController implements CouponApiDocs {
 
     private final CouponService couponService;
 
@@ -34,8 +37,8 @@ public class CouponController {
             Long userId,
             @PathVariable Long couponId
     ) {
-        CouponDetailResponse detail = couponService.getCouponDetail(userId, couponId);
-        return CommonResponse.createSuccess(HttpStatus.OK, "쿠폰 상세 조회 성공", detail);
+        CouponDetailResponse coupon = couponService.getCouponDetail(userId, couponId);
+        return CommonResponse.createSuccess(HttpStatus.OK, "쿠폰 상세 조회 성공", coupon);
     }
 
     // 3. 쿠폰 이미지 변경
@@ -46,8 +49,8 @@ public class CouponController {
             @PathVariable Long couponId,
             @RequestBody CouponImageUpdateRequest request
     ) {
-        couponService.updateCouponImage(userId, couponId, request.getImageUrl());
-        return CommonResponse.createSuccessWithNoContent(HttpStatus.OK, "쿠폰 이미지가 변경되었습니다.");
+        CouponDetailResponse coupon = couponService.updateCouponImage(userId, couponId, request.getImageUrl());
+        return CommonResponse.createSuccess(HttpStatus.OK, "쿠폰 이미지가 변경되었습니다.", coupon);
     }
 
     // 4. 쿠폰 사용 (count 차감)
