@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cubco.coupon.domain.Coupon;
 import org.cubco.dto.coupon.CouponDetailResponse;
+import org.cubco.dto.coupon.CouponImageUpdateResponse;
 import org.cubco.dto.coupon.CouponResponse;
+import org.cubco.dto.coupon.CouponUseResponse;
 import org.cubco.exception.CouponNotFoundException;
 import org.cubco.exception.CustomException;
 import org.cubco.exception.ErrorCode;
@@ -47,7 +49,7 @@ public class CouponService {
 
     // [3] 쿠폰 이미지 수정
     @Transactional
-    public CouponDetailResponse updateCouponImage(Long userId, Long couponId, String imageUrl) {
+    public CouponImageUpdateResponse updateCouponImage(Long userId, Long couponId, String imageUrl) {
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new CouponNotFoundException());
 
@@ -56,12 +58,12 @@ public class CouponService {
 
         coupon.updateImage(imageUrl);
 
-        return CouponDetailResponse.of(coupon);
+        return CouponImageUpdateResponse.of(coupon);
     }
 
     // [4] 쿠폰 사용 처리 (count 차감)
     @Transactional
-    public void useCoupon(Long userId, Long couponId, int count) {
+    public CouponUseResponse useCoupon(Long userId, Long couponId, int count) {
         Coupon coupon = couponRepository.findByUserIdAndId(userId, couponId)
                 .orElseThrow(() -> new CouponNotFoundException());
 
@@ -71,6 +73,7 @@ public class CouponService {
         countPolicy.validateCouponCount(coupon, count);
 
         coupon.updateCount(count);
+        return CouponUseResponse.of(coupon);
     }
 
 }

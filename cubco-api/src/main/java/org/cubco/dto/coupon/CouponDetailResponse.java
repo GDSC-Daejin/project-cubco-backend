@@ -8,16 +8,16 @@ import org.cubco.coupon.domain.Coupon;
 @AllArgsConstructor
 public class CouponDetailResponse {
     private Long couponId;
-    private int count;
-    private String imageUrl;
     private Long cafeId;
+    private int stampCount;
+    private String couponImageUrl;
 
     public static CouponDetailResponse of(Coupon coupon) {
         return new CouponDetailResponse(
                 coupon.getId(),
+                coupon.getCafe().getId(),
                 coupon.getCount(),
-                coupon.getImageUrl(),
-                coupon.getCafe().getId()
+                coupon.getImageUrl()
         );
     }
 }

@@ -2,10 +2,7 @@ package org.cubco.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.cubco.dto.coupon.CouponDetailResponse;
-import org.cubco.dto.coupon.CouponImageUpdateRequest;
-import org.cubco.dto.coupon.CouponResponse;
-import org.cubco.dto.coupon.CouponUseRequest;
+import org.cubco.dto.coupon.*;
 import org.cubco.response.CommonResponse;
 import org.cubco.service.CouponService;
 import org.cubco.swagger.CouponApiDocs;
@@ -49,7 +46,7 @@ public class CouponController implements CouponApiDocs {
             @PathVariable Long couponId,
             @RequestBody CouponImageUpdateRequest request
     ) {
-        CouponDetailResponse coupon = couponService.updateCouponImage(userId, couponId, request.getImageUrl());
+        CouponImageUpdateResponse coupon = couponService.updateCouponImage(userId, couponId, request.getImageUrl());
         return CommonResponse.createSuccess(HttpStatus.OK, "쿠폰 이미지가 변경되었습니다.", coupon);
     }
 
@@ -61,8 +58,8 @@ public class CouponController implements CouponApiDocs {
             @PathVariable Long couponId,
             @RequestBody CouponUseRequest request
     ) {
-        couponService.useCoupon(userId, couponId, request.getCount());
-        return CommonResponse.createSuccessWithNoContent(HttpStatus.OK, "쿠폰이 사용되었습니다.");
+        CouponUseResponse coupon = couponService.useCoupon(userId, couponId, request.getCount());
+        return CommonResponse.createSuccess(HttpStatus.OK, "쿠폰이 사용되었습니다.", coupon);
     }
 
 }
