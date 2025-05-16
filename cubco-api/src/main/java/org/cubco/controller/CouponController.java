@@ -1,5 +1,6 @@
 package org.cubco.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cubco.dto.coupon.*;
@@ -44,7 +45,7 @@ public class CouponController implements CouponApiDocs {
 //            @UserId Long userId, // PR 후 주석 해제
             Long userId,
             @PathVariable Long couponId,
-            @RequestBody CouponImageUpdateRequest request
+            @RequestBody @Valid CouponImageUpdateRequest request
     ) {
         CouponImageUpdateResponse coupon = couponService.updateCouponImage(userId, couponId, request.getImageUrl());
         return CommonResponse.createSuccess(HttpStatus.OK, "쿠폰 이미지가 변경되었습니다.", coupon);
@@ -56,7 +57,7 @@ public class CouponController implements CouponApiDocs {
 //            @UserId Long userId, // PR 후 주석 해제
             Long userId,
             @PathVariable Long couponId,
-            @RequestBody CouponUseRequest request
+            @RequestBody @Valid CouponUseRequest request
     ) {
         CouponUseResponse coupon = couponService.useCoupon(userId, couponId, request.getCount());
         return CommonResponse.createSuccess(HttpStatus.OK, "쿠폰이 사용되었습니다.", coupon);

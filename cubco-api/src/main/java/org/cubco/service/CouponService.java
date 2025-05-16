@@ -69,7 +69,7 @@ public class CouponService {
 
         // 수정 권한이 있는지 검증
         ownershipPolicy.validateCouponOwner(coupon, userId);
-        // count 수가 적절한지 검증
+        // count가 coupon의 stampCount보다 작은지 검증
         countPolicy.validateCouponCount(coupon, count);
 
         coupon.updateCount(count);

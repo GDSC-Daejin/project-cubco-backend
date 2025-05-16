@@ -50,6 +50,7 @@ public interface CouponApiDocs {
     @Operation(summary = "쿠폰 이미지 변경", description = "쿠폰 이미지 변경이 잘 되는지 확인합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "쿠폰 이미지가 변경되었습니다."),
+            @ApiResponse(responseCode = "400", description = "요청데이터가 유효하지 않습니다."),
             @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
             @ApiResponse(responseCode = "403", description = "접근 권한이 없습니다."),
             @ApiResponse(responseCode = "404", description = "존재하는 쿠폰을 찾을 수 없습니다."),
