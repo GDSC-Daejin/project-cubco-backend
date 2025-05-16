@@ -1,4 +1,4 @@
-package org.cubco.filter;
+package org.cubco.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.cubco.exception.ErrorCode;
 import org.cubco.response.CommonResponse;
-import org.cubco.util.JWTutil;
+import org.cubco.auth.jwt.JWTutil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
