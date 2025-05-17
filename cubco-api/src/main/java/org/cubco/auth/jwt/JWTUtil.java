@@ -4,21 +4,19 @@ import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
-@PropertySource("classpath:security.properties")
-public class JWTutil {
+public class JWTUtil {
 
     private final SecretKey secretKey;
     private final int expiredms;
 
     @Autowired
-    public JWTutil(SecretKey secretKey, @Value("${jwt.expiration}")int expiredms){
+    public JWTUtil(SecretKey secretKey, @Value("${jwt.expiration}")int expiredms){
         this.expiredms = expiredms;
         this.secretKey = secretKey;
     }
@@ -53,7 +51,6 @@ public class JWTutil {
         }
     }
 
-
     public String createToken(Long userId, String role){
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
@@ -63,5 +60,4 @@ public class JWTutil {
                 .signWith(secretKey)
                 .compact();
     }
-
 }
