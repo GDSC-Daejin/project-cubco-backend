@@ -60,7 +60,8 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
-                                "/test/jwt"
+                                "/test/jwt",
+                                "/api/v1/**" // 개발 완료 후 변경 예정
                         ).permitAll()
                         .anyRequest().hasRole("ADMIN"))
                 .addFilterBefore(new JwtAuthenticationFilter(jwTutil), UsernamePasswordAuthenticationFilter.class);

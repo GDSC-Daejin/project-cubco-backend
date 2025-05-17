@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.nio.file.AccessDeniedException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Hidden
@@ -46,6 +49,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CommonResponse<?>> handleValidationException(MethodArgumentNotValidException ex) {
         log.error("DTO 유효성 검사 실패", ex);
         BindingResult bindingResult = ex.getBindingResult();
+
+        Map<String, String> fieldErrors = new HashMap<>();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            fieldErrors.put(fieldError.getField(), fieldError.getDefaultMessage()); // ← 여기
+        }
+
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(CommonResponse.createValidationError(bindingResult));
