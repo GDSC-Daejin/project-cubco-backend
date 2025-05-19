@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.cubco.exception.ErrorCode;
 import org.cubco.response.CommonResponse;
-import org.cubco.auth.jwt.JWTutil;
+import org.cubco.auth.jwt.JWTUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,11 +25,10 @@ import java.util.List;
 @Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    private final JWTUtil jwtUtil;
 
-    private JWTutil jwTutil;
-
-    public JwtAuthenticationFilter(JWTutil jwTutil) {
-        this.jwTutil = jwTutil;
+    public JwtAuthenticationFilter(JWTUtil jwTutil) {
+        this.jwtUtil = jwTutil;
     }
 
 
@@ -44,17 +43,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            String token = jwTutil.extractToken(request);
+            String token = jwtUtil.extractToken(request);
 
             if (token == null) {
                 filterChain.doFilter(request, response);
                 return;
             }
 
-            String userId = jwTutil.getUserId(token);
-            String role = jwTutil.getRole(token);
+            String userId = jwtUtil.getUserId(token);
+            String role = jwtUtil.getRole(token);
 
-            if (jwTutil.isExpired(token)) {
+            if (jwtUtil.isExpired(token)) {
                 CommonResponse<?> errorResponse = CommonResponse.createError("유효기간이 만료된 토큰입니다.");
                 handleAuthenticationError(response, errorResponse);
                 return;

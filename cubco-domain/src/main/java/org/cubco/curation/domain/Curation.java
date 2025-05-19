@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.cubco.common.BaseTimeEntity;
+import org.cubco.user.domain.User;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -29,11 +30,15 @@ public class Curation extends BaseTimeEntity {
     @Column(name = "report_count")
     private int reportCount = 0;
 
-    public static Curation create(String title, String content, int reportCount) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public static Curation create(User user, String title, String content) {
         return Curation.builder()
+                .user(user)
                 .title(title)
                 .content(content)
-                .reportCount(reportCount)
                 .build();
     }
 }

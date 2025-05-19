@@ -3,12 +3,11 @@ package org.cubco.auth.config;
 import io.jsonwebtoken.Jwts;
 import org.cubco.auth.filter.JwtAuthenticationFilter;
 import org.cubco.auth.handler.CustomAccessDeniedHandler;
-import org.cubco.auth.jwt.JWTutil;
+import org.cubco.auth.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,11 +20,8 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-@PropertySource("classpath:security.properties")
 public class SecurityConfig {
-
     private final CustomAccessDeniedHandler accessDeniedHandler;
-
 
     @Autowired
     public SecurityConfig(CustomAccessDeniedHandler accessDeniedHandler) {
@@ -46,7 +42,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JWTutil jwTutil) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JWTUtil jwTutil) throws Exception {
         http
                 .exceptionHandling(exception -> exception
                         .accessDeniedHandler(accessDeniedHandler)); //인가 예외처리

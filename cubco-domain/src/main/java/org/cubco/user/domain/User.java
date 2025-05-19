@@ -56,7 +56,7 @@ public class User extends BaseTimeEntity {
     @Column(name = "status")
     private Status status;
 
-    public static User create(String name, String email, String phone, String city, SocialType socialType, String socialId) {
+    public static User create(String name, String email, String phone, String city, SocialType socialType, String socialId, Status status, RoleType role) {
         return User.builder()
                 .name(name)
                 .email(email)
@@ -64,8 +64,8 @@ public class User extends BaseTimeEntity {
                 .city(city)
                 .socialType(socialType)
                 .socialId(socialId)
-                .status(Status.ACTIVE)
-                .roleType(RoleType.MEMBER)
+                .status(status)
+                .roleType(role)
                 .build();
     }
 }
