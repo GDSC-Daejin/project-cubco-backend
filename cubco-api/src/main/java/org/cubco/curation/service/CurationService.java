@@ -48,14 +48,16 @@ public class CurationService {
     public void createCurationLike(Long userId, Long curationId) {
         User user = getUser(userId);
         Curation curation = getCuration(curationId);
-        saveCurationLike(user, curation);
+        Like like = Like.create(user, curation);
+        likeRepository.save(like);
     }
 
     @Transactional
     public void deleteCurationLike(Long userId, Long curationId) {
         User user = getUser(userId);
         Curation curation = getCuration(curationId);
-        deleteCurationLike(user, curation);
+        Like like = getLike(user, curation);
+        likeRepository.delete(like);
     }
 
     public CurationGetDetailRes getCurationDetail(Long userId, Long curationId) {
@@ -101,6 +103,11 @@ public class CurationService {
         return curationImageRepository.findAllByCuration(curation);
     }
 
+    private Like getLike(User user, Curation curation) {
+        return likeRepository.findLikeByUserAndCuration(user, curation)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.LIKE_NOT_FOUND));
+    }
+
     private void validateImage(List<CurationImage> images) {
         if (images.isEmpty()) {
             throw new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND);
@@ -127,15 +134,5 @@ public class CurationService {
 
     private boolean hasUserLikedCuration(User user, Curation curation) {
         return likeRepository.existsLikeByUserAndCuration(user, curation);
-    }
-
-    private void deleteCurationLike(User user, Curation curation) {
-        Like like = likeRepository.findLikeByUserAndCuration(user, curation);
-        likeRepository.delete(like);
-    }
-
-    private void saveCurationLike(User user, Curation curation) {
-        Like like = Like.create(user, curation);
-        likeRepository.save(like);
     }
 }
