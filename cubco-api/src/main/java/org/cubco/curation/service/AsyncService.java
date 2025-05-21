@@ -22,11 +22,11 @@ public class AsyncService {
     private final CurationTagService curationTagService;
 
     @Transactional
-    public void createCurationImage(List<MultipartFile> images, Curation curation) {
+    public String createCurationImage(List<MultipartFile> images, Curation curation) {
         if (images.isEmpty()) {
             throw new EntityNotFoundException(ErrorCode.IMAGE_NOT_FOUND);
         }
-        imageService.saveCurationImages(images, curation);
+        return imageService.saveCurationImages(images, curation);
     }
 
     @Async
