@@ -119,4 +119,17 @@ public interface CurationApi {
                     @ApiResponse(responseCode = "500", description = "서버 내부 오류입니다.", content = @Content)})
     ResponseEntity<Void> deleteCurationLike(@Parameter(hidden = true) @UserId Long userId,
                                             @PathVariable("curationId") Long curationId);
+
+    @Operation(
+            summary = "큐레이션 삭제 API",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "큐레이션 삭제에 성공하였습니다.", content = @Content),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청입니다.", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "액세스 토큰의 형식이 올바르지 않습니다. Bearer 타입을 확인해 주세요.", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "액세스 토큰의 값이 올바르지 않습니다.", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "액세스 토큰이 만료되었습니다. 재발급 받아주세요.", content = @Content),
+                    @ApiResponse(responseCode = "405", description = "잘못된 HTTP method 요청입니다.", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "서버 내부 오류입니다.", content = @Content)})
+    ResponseEntity<Void> deleteCuration(@Parameter(hidden = true) @UserId Long userId,
+                                            @PathVariable("curationId") Long curationId);
 }

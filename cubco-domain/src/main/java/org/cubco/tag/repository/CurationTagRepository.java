@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CurationTagRepository extends JpaRepository<CurationTag, Long> {
     List<CurationTag> findAllByCuration(Curation curation);
+    void deleteByCuration(Curation curation);
 }

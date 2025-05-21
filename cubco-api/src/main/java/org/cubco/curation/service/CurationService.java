@@ -9,6 +9,7 @@ import org.cubco.curation.dto.response.CurationGetDetailRes;
 import org.cubco.curation.repository.CurationRepository;
 import org.cubco.exception.EntityNotFoundException;
 import org.cubco.exception.ErrorCode;
+import org.cubco.exception.ForbiddenException;
 import org.cubco.image.domain.CurationImage;
 import org.cubco.image.repository.CurationImageRepository;
 import org.cubco.like.domain.Like;
@@ -85,8 +86,18 @@ public class CurationService {
         if (!isMyCuration) {
             isUserLiked = hasUserLikedCuration(user, curation);
         }
-
         return CurationGetDetailRes.of(curation, imagesRes, tagsRes, likeCount, isUserLiked);
+    }
+
+    @Transactional
+    public void deleteCuration(Long userId, Long curationId) {
+        User user = getUser(userId);
+        Curation curation = getCuration(curationId);
+        validateCuration(user, curation);
+        likeRepository.deleteByCuration(curation);
+        curationTagRepository.deleteByCuration(curation);
+        curationImageRepository.deleteByCuration(curation);
+        curationRepository.delete(curation);
     }
 
     private User getUser(Long userId) {
@@ -121,6 +132,12 @@ public class CurationService {
     private void validateCurationTag(List<CurationTag> curationTags) {
         if (curationTags.isEmpty()) {
             throw new EntityNotFoundException(ErrorCode.TAG_NOT_FOUND);
+        }
+    }
+
+    private void validateCuration(User user, Curation curation) {
+        if (!user.equals(curation.getUser())) {
+            throw new ForbiddenException(ErrorCode.CURATION_DELETE_ACCESS_DENIED);
         }
     }
 

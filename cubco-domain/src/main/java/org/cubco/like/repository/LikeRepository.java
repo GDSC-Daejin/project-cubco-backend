@@ -13,4 +13,5 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     int countByCuration(Curation curation);
     boolean existsLikeByUserAndCuration(User user, Curation curation);
     Optional<Like> findLikeByUserAndCuration(User user, Curation curation);
+    void deleteByCuration(Curation curation);
 }

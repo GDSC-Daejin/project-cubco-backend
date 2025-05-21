@@ -47,4 +47,10 @@ public class CurationController implements CurationApi {
         CurationGetDetailRes curationGetDetailRes = curationService.getCurationDetail(userId, curationId);
         return ResponseEntity.status(HttpStatus.OK).body(curationGetDetailRes);
     }
+
+    @DeleteMapping("/{curationId}")
+    public ResponseEntity<Void> deleteCuration(@UserId Long userId, @PathVariable("curationId") Long curationId) {
+        curationService.deleteCuration(userId, curationId);
+        return ResponseEntity.ok().build();
+    }
 }
