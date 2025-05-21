@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.cubco.curation.domain.Curation;
 import org.cubco.curation.dto.request.CurationCreateReq;
 import org.cubco.curation.dto.response.CurationCreateRes;
+import org.cubco.curation.dto.response.CurationDtoGetRes;
+import org.cubco.curation.dto.response.CurationGetAllRes;
 import org.cubco.curation.dto.response.CurationGetDetailRes;
 import org.cubco.curation.repository.CurationRepository;
 import org.cubco.exception.EntityNotFoundException;
@@ -18,11 +20,15 @@ import org.cubco.tag.domain.CurationTag;
 import org.cubco.tag.repository.CurationTagRepository;
 import org.cubco.user.domain.User;
 import org.cubco.user.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,13 +41,20 @@ public class CurationService {
     private final LikeRepository likeRepository;
     private final AsyncService asyncService;
 
+    public CurationGetAllRes getAllCuration(Pageable pageable) {
+        Page<Curation> curations = curationRepository.findAll(pageable);
+        List<CurationDtoGetRes> curationDtoGetRes = convertToDtoList(curations);
+        return CurationGetAllRes.of(curationDtoGetRes, curations.getTotalPages(), curations.getTotalElements());
+    }
+
     @Transactional
     public CurationCreateRes createCuration(Long userId, CurationCreateReq curationCreateReq, List<MultipartFile> images) {
         User user = getUser(userId);
         Curation curation = Curation.create(user, curationCreateReq.getTitle(), curationCreateReq.getContent());
         Curation saveCuration = curationRepository.save(curation);
-        asyncService.createCurationImage(images, saveCuration);
+        String thumbnail = asyncService.createCurationImage(images, saveCuration);
         asyncService.createCurationTags(curationCreateReq.getTags(), saveCuration);
+        saveCuration.setThumbnail(thumbnail);
         return CurationCreateRes.of(saveCuration.getId());
     }
 
@@ -151,5 +164,27 @@ public class CurationService {
 
     private boolean hasUserLikedCuration(User user, Curation curation) {
         return likeRepository.existsLikeByUserAndCuration(user, curation);
+    }
+
+    private List<CurationDtoGetRes> convertToDtoList(Page<Curation> curations) {
+        List<Curation> curationList = curations.getContent();
+        List<Object[]> results = likeRepository.countByCurations(curationList);
+
+        Map<Curation, Integer> likeCounts = results.stream()
+                .collect(Collectors.toMap(
+                        result -> (Curation) result[0],
+                        result -> ((Long) result[1]).intValue()
+                ));
+
+        return curations.stream()
+                .map(curation -> convertToDto(curation, likeCounts.getOrDefault(curation, 0)))
+                .toList();
+    }
+
+    private CurationDtoGetRes convertToDto(Curation curation, int likeCount) {
+        return CurationDtoGetRes.of(
+                curation,
+                likeCount
+        );
     }
 }

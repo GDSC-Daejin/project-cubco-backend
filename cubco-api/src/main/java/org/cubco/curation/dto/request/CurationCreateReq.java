@@ -10,11 +10,11 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class CurationCreateReq {
     @Size(min = 5)
-    String title;
+    private String title;
 
     @Size(min = 10)
-    String content;
+    private String content;
 
     @Size(min = 1, max = 5)
-    List<TagCreateReq> tags;
+    private List<TagCreateReq> tags;
 }
