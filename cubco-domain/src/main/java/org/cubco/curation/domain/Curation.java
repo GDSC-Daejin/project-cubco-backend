@@ -30,6 +30,10 @@ public class Curation extends BaseTimeEntity {
     @Column(name = "report_count")
     private int reportCount = 0;
 
+    @Setter
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,4 +45,5 @@ public class Curation extends BaseTimeEntity {
                 .content(content)
                 .build();
     }
+
 }

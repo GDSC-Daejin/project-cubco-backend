@@ -24,6 +24,7 @@ public enum ErrorCode {
     // 403 Forbidden
     FORBIDDEN(HttpStatus.FORBIDDEN, "FORBIDDEN", "접근 권한이 없습니다."),
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "ACCESS_DENIED", "이 기능에 접근할 수 없습니다."),
+    CURATION_DELETE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "CURATION_DELETE_ACCESS_DENIED", "해당 큐레이션을 삭제할 권한이 없습니다."),
 
     // 404 Not Found
     NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND", "요청한 자원이 존재하지 않습니다."),
@@ -39,6 +40,10 @@ public enum ErrorCode {
 
     // 405 Method Not Allowed
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "METHOD_NOT_ALLOWED", "허용되지 않은 HTTP 메서드입니다."),
+
+    // 409 Conflict
+    CONFLICT(HttpStatus.CONFLICT, "CONFLICT", "이미 존재하는 리소스입니다."),
+    DUPLICATE_CURATION_LIKE(HttpStatus.CONFLICT, "DUPLICATE_CURATION_LIKE", "해당 큐레이션에 좋아요가 이미 존재합니다."),
 
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "서버 내부 오류가 발생했습니다."),

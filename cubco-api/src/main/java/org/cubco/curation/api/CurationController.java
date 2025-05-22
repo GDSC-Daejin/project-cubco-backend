@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.cubco.auth.resolver.UserId;
 import org.cubco.curation.dto.request.CurationCreateReq;
 import org.cubco.curation.dto.response.CurationCreateRes;
+import org.cubco.curation.dto.response.CurationGetAllRes;
 import org.cubco.curation.dto.response.CurationGetDetailRes;
 import org.cubco.curation.service.CurationService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CurationController implements CurationApi {
     private final CurationService curationService;
+
+    @GetMapping
+    public ResponseEntity<CurationGetAllRes> getAllCuration(Pageable pageable) {
+        CurationGetAllRes response = curationService.getAllCuration(pageable);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -46,5 +54,11 @@ public class CurationController implements CurationApi {
     public ResponseEntity<CurationGetDetailRes> getCurationDetail(@UserId Long userId, @PathVariable("curationId") Long curationId) {
         CurationGetDetailRes curationGetDetailRes = curationService.getCurationDetail(userId, curationId);
         return ResponseEntity.status(HttpStatus.OK).body(curationGetDetailRes);
+    }
+
+    @DeleteMapping("/{curationId}")
+    public ResponseEntity<Void> deleteCuration(@UserId Long userId, @PathVariable("curationId") Long curationId) {
+        curationService.deleteCuration(userId, curationId);
+        return ResponseEntity.ok().build();
     }
 }

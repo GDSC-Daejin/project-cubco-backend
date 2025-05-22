@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CurationImageRepository extends JpaRepository<CurationImage, Long> {
-    List<CurationImage>  findAllByCuration(Curation curation);
+    List<CurationImage> findAllByCuration(Curation curation);
+    void deleteByCuration(Curation curation);
 }

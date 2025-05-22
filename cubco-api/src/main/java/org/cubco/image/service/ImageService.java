@@ -26,7 +26,7 @@ public class ImageService {
     private final S3Service s3Service;
 
     @Transactional
-    public void saveCurationImages(List<MultipartFile> images, Curation curation) {
+    public String saveCurationImages(List<MultipartFile> images, Curation curation) {
         AtomicInteger sequence = new AtomicInteger();
         Long curationId = curation.getId();
         List<CurationImage> curationImages = images.stream().map(image -> {
@@ -37,5 +37,6 @@ public class ImageService {
             }
         }).toList();
         curationImageRepository.saveAll(curationImages);
+        return curationImages.get(0).getImageUrl();
     }
 }
