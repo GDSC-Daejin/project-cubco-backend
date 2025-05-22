@@ -11,7 +11,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.cubco.auth.resolver.UserId;
 import org.cubco.curation.dto.request.CurationCreateReq;
 import org.cubco.curation.dto.response.CurationCreateRes;
+import org.cubco.curation.dto.response.CurationGetAllRes;
 import org.cubco.curation.dto.response.CurationGetDetailRes;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -22,6 +24,53 @@ import java.util.List;
 @Tag(name = "큐레이션 관련 API")
 @SecurityRequirement(name = "Authorization")
 public interface CurationApi {
+    @Operation(
+            summary = "큐레이션 전체조회 API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "큐레이션 전체 조회에 성공했습니다.",
+                            content = @Content(
+                                    schema = @Schema(implementation = CurationGetAllRes.class),
+                                    examples = @ExampleObject(value = """
+                                            {
+                                              "curations": [
+                                                {
+                                                  "curationId": 1,
+                                                  "thumbnail": "https://example.com/curation/image1.jpg",
+                                                  "title": "ddfdfdfdff",
+                                                  "content": "dfdfdfdfdfdfdfdf",
+                                                  "like": 0
+                                                },
+                                                {
+                                                  "curationId": 2,
+                                                  "thumbnail": "https://example.com/curation/image2.jpg",
+                                                  "title": "ddfdfdfdff",
+                                                  "content": "dfdfdfdfdfdfdfdf",
+                                                  "like": 0
+                                                },
+                                                {
+                                                  "curationId": 3,
+                                                  "thumbnail": "https://example.com/curation/image3.jpg",
+                                                  "title": "ddfdfdfdff",
+                                                  "content": "dfdfdfdfdfdfdfdf",
+                                                  "like": 0
+                                                }
+                                              ],
+                                              "totalPages": 1,
+                                              "totalElements": 3
+                                            }
+                                            """)
+                            )
+                    ),
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청입니다.", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "액세스 토큰의 형식이 올바르지 않습니다. Bearer 타입을 확인해 주세요.", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "액세스 토큰의 값이 올바르지 않습니다.", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "액세스 토큰이 만료되었습니다. 재발급 받아주세요.", content = @Content),
+                    @ApiResponse(responseCode = "405", description = "잘못된 HTTP method 요청입니다.", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "서버 내부 오류입니다.", content = @Content)})
+    ResponseEntity<CurationGetAllRes> getAllCuration(Pageable pageable);
+
     @Operation(
             summary = "큐레이션 생성 API",
             responses = {
