@@ -9,6 +9,7 @@ import org.cubco.curation.dto.response.CurationDtoGetRes;
 import org.cubco.curation.dto.response.CurationGetAllRes;
 import org.cubco.curation.dto.response.CurationGetDetailRes;
 import org.cubco.curation.repository.CurationRepository;
+import org.cubco.exception.ConflictException;
 import org.cubco.exception.EntityNotFoundException;
 import org.cubco.exception.ErrorCode;
 import org.cubco.exception.ForbiddenException;
@@ -62,6 +63,7 @@ public class CurationService {
     public void createCurationLike(Long userId, Long curationId) {
         User user = getUser(userId);
         Curation curation = getCuration(curationId);
+        duplicateCurationLike(user, curation);
         Like like = Like.create(user, curation);
         likeRepository.save(like);
     }
@@ -151,6 +153,12 @@ public class CurationService {
     private void validateCuration(User user, Curation curation) {
         if (!user.equals(curation.getUser())) {
             throw new ForbiddenException(ErrorCode.CURATION_DELETE_ACCESS_DENIED);
+        }
+    }
+
+    private void duplicateCurationLike(User user, Curation curation) {
+        if (likeRepository.findLikeByUserAndCuration(user, curation).isPresent()) {
+            throw new ConflictException(ErrorCode.DUPLICATE_CURATION_LIKE);
         }
     }
 
