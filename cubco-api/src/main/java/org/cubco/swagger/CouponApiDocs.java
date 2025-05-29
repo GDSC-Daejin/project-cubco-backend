@@ -5,12 +5,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.cubco.dto.coupon.CouponDetailResponse;
-import org.cubco.dto.coupon.CouponImageUpdateRequest;
-import org.cubco.dto.coupon.CouponResponse;
-import org.cubco.dto.coupon.CouponUseRequest;
+import org.cubco.coupon.dto.response.CouponDetailResponse;
+import org.cubco.coupon.dto.request.CouponImageUpdateRequest;
+import org.cubco.coupon.dto.response.CouponResponse;
+import org.cubco.coupon.dto.request.CouponUseRequest;
 import org.cubco.response.CommonResponse;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 

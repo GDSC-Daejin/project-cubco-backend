@@ -1,4 +1,4 @@
-package org.cubco.dto.coupon;
+package org.cubco.coupon.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
