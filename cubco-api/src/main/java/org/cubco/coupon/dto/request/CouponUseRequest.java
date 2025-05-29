@@ -1,12 +1,10 @@
-package org.cubco.dto.coupon;
+package org.cubco.coupon.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.cubco.coupon.domain.Coupon;
 
 @Getter
 @AllArgsConstructor

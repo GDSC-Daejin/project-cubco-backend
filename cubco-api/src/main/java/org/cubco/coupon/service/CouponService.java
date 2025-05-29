@@ -1,22 +1,20 @@
-package org.cubco.service;
+package org.cubco.coupon.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cubco.coupon.domain.Coupon;
-import org.cubco.dto.coupon.CouponDetailResponse;
-import org.cubco.dto.coupon.CouponImageUpdateResponse;
-import org.cubco.dto.coupon.CouponResponse;
-import org.cubco.dto.coupon.CouponUseResponse;
+import org.cubco.coupon.dto.response.CouponDetailResponse;
+import org.cubco.coupon.dto.response.CouponImageUpdateResponse;
+import org.cubco.coupon.dto.response.CouponResponse;
+import org.cubco.coupon.dto.response.CouponUseResponse;
 import org.cubco.exception.CouponNotFoundException;
-import org.cubco.exception.CustomException;
-import org.cubco.exception.ErrorCode;
 import org.cubco.policy.CouponOwnershipPolicy;
 import org.cubco.policy.CouponRemainingCountPolicy;
 import org.cubco.repository.CouponRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -32,7 +30,7 @@ public class CouponService {
     public List<CouponResponse> getCouponsByUser(Long userId) {
         List<Coupon> coupons = couponRepository.findAllByUserId(userId);
 
-        if (coupons.isEmpty()) throw new CouponNotFoundException();
+        if (coupons.isEmpty()) return Collections.emptyList();
 
         return coupons.stream()
                 .map(CouponResponse::of)
