@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CouponImageUpdateRequest {
+public class CouponImageUpdateReq {
 
     @NotBlank(message = "변경할 이미지 파일이 없습니다.")
     @Schema(description = "변경할 이미지 URL", example = "https://img.com/sample.jpg")

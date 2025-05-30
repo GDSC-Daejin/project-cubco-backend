@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CouponUseRequest {
+public class CouponUseReq {
 
     @Min(value = 1,  message = "1개 이상 입력해야 합니다.")
     @Max(value = 10, message = "최대 10개까지 가능합니다.")

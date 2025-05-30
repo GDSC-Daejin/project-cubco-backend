@@ -20,19 +20,19 @@ public class CommonResponse<T> {
     private T data;                // 실제 응답 데이터 (성공일 경우에만 포함)
 
     // 성공 응답 생성 (데이터와 메시지 포함)
-    public static <T> CommonResponse<T> createSuccess(HttpStatus httpStatus, String message, T data) {
+    public static <T> CommonResponse<T> success(HttpStatus httpStatus, String message, T data) {
         return new CommonResponse<>(httpStatus.value(), message, data);
     }
 
     // 성공 응답 생성 (데이터 없음, 메시지만 있는 경우)
-    public static CommonResponse<?> createSuccessWithNoContent(HttpStatus httpStatus, String message) {
+    public static CommonResponse<?> successWithoutData(HttpStatus httpStatus, String message) {
         return new CommonResponse<>(httpStatus.value(), message);
     }
 
     // 에러 응답 생성 (message만 포함)
-    public static CommonResponse<?> createError(String message) {
-        return new CommonResponse<>(message);
-    }
+//    public static CommonResponse<?> createError(String message) {
+//        return new CommonResponse<>(message);
+//    }
 
     // 에러 응답 생성 (status, code, message 포함)
     public static CommonResponse<?> createError(HttpStatus httpStatus, String code, String message) {

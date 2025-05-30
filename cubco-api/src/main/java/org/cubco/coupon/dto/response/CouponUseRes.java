@@ -6,14 +6,14 @@ import org.cubco.coupon.domain.Coupon;
 
 @Getter
 @AllArgsConstructor
-public class CouponUseResponse {
+public class CouponUseRes {
     private Long couponId;
     private Long cafeId;
     private int stampCount;
     private String couponImageUrl;
 
-    public static CouponUseResponse of(Coupon coupon) {
-        return new CouponUseResponse(
+    public static CouponUseRes of(Coupon coupon) {
+        return new CouponUseRes(
                 coupon.getId(),
                 coupon.getCafe().getId(),
                 coupon.getCount(),
