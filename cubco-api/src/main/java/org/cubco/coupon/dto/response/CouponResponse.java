@@ -1,4 +1,4 @@
-package org.cubco.dto.coupon;
+package org.cubco.coupon.dto.response;
 
 
 import lombok.AllArgsConstructor;
