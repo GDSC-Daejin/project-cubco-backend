@@ -63,4 +63,12 @@ public class User extends BaseTimeEntity {
                 .roleType(role)
                 .build();
     }
+
+    public static User createGuest(String phone) {
+        return User.builder()
+                .phone(phone)
+                .roleType(RoleType.GUEST)
+                .status(Status.ACTIVE)
+                .build();
+    }
 }

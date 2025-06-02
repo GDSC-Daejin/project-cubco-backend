@@ -30,6 +30,7 @@ public enum ErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND", "요청한 자원이 존재하지 않습니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_NOT_FOUND", "해당 사용자를 찾을 수 없습니다."),
     COUPON_NOT_FOUND(HttpStatus.NOT_FOUND, "COUPON_NOT_FOUND", "존재하는 쿠폰을 찾을 수 없습니다."),
+    CAFE_NOT_FOUND(HttpStatus.NOT_FOUND, "CAFE_NOT_FOUND", "해당 카페를 찾을 수 없습니다."),
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "ENTITY_NOT_FOUND", "대상을 찾을 수 없습니다."),
     IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "IMAGE_NOT_FOUND", "해당 이미지가 존재하지 않습니다"),
     CURATION_NOT_FOUND(HttpStatus.NOT_FOUND, "CURATION_NOT_FOUND", "큐레이션이 존재하지 않습니다"),

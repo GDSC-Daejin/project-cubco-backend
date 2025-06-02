@@ -7,7 +7,7 @@ import org.cubco.coupon.dto.response.CouponDetailRes;
 import org.cubco.coupon.dto.response.CouponImageUpdateRes;
 import org.cubco.coupon.dto.response.CouponRes;
 import org.cubco.coupon.dto.response.CouponUseRes;
-import org.cubco.exception.CouponNotFoundException;
+import org.cubco.exception.coupon.CouponNotFoundException;
 import org.cubco.policy.CouponOwnershipPolicy;
 import org.cubco.policy.CouponRemainingCountPolicy;
 import org.cubco.coupon.repository.CouponRepository;
