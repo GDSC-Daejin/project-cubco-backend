@@ -20,17 +20,9 @@ public class StampHistoryService {
 
     // 비회원 적립요청 생성
     public void createGuestStampHistory(GuestStampReq request) {
-
         User user = User.createGuest(request.getPhone());
-        Cafe cafe = cafeRepository.findById(request.getCafeId()).orElseThrow(()
-                -> new CafeNotFoundException());
-
-        StampHistory cafegistory = StampHistory.create(
-                user,
-                cafe,
-                StampStatus.PENDING
-        );
-
-        stampHistoryRepository.save(cafegistory);
+        Cafe cafe = cafeRepository.findById(request.getCafeId()).orElseThrow(CafeNotFoundException::new);
+        StampHistory history = StampHistory.create(user, cafe, StampStatus.PENDING);
+        stampHistoryRepository.save(history);
     }
 }

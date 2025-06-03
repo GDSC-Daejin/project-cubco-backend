@@ -25,14 +25,19 @@ public class CommonResponse<T> {
     }
 
     // 성공 응답 생성 (데이터 없음, 메시지만 있는 경우)
-    public static CommonResponse<?> successWithoutData(HttpStatus httpStatus, String message) {
+    public static CommonResponse<?> successWithMessage(HttpStatus httpStatus, String message) {
         return new CommonResponse<>(httpStatus.value(), message);
     }
 
+    // 성공 응답 생성 (메시지 없음, 데이터만 있는 경우)
+    public static <T> CommonResponse<T> successWithData(HttpStatus httpStatus, T data) {
+        return new CommonResponse<>(httpStatus.value(), data);
+    }
+
     // 에러 응답 생성 (message만 포함)
-//    public static CommonResponse<?> createError(String message) {
-//        return new CommonResponse<>(message);
-//    }
+    public static CommonResponse<?> createError(String message) {
+        return new CommonResponse<>(message);
+    }
 
     // 에러 응답 생성 (status, code, message 포함)
     public static CommonResponse<?> createError(HttpStatus httpStatus, String code, String message) {
@@ -48,17 +53,23 @@ public class CommonResponse<T> {
         return new CommonResponse<>(HttpStatus.BAD_REQUEST.value(), "VALIDATION_FAILED", "요청 데이터가 유효하지 않습니다.", fieldErrors);
     }
 
-    // 생성자: 성공 응답용 (data 포함)
+    // 생성자: 성공 응답용 (data + message)
     private CommonResponse(int status, String message, T data) {
         this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    // 생성자: 성공 응답용
+    // 생성자: 성공 응답용 (message)
     private CommonResponse(int status, String message) {
         this.status = status;
         this.message = message;
+    }
+
+    // 생성자: 성공 응답용 (data)
+    private CommonResponse(int status, T data) {
+        this.status = status;
+        this.data = data;
     }
 
     // 생성자: 에러 응답용 (code, message, data 포함)

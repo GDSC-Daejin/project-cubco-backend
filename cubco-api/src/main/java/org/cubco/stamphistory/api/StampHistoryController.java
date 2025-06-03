@@ -16,8 +16,8 @@ public class StampHistoryController {
 
     // 비회원 적립 요청
     @PostMapping("/guest")
-    public CommonResponse guestCreate(@RequestBody GuestStampReq request) {
+    public CommonResponse<?> guestCreate(@RequestBody GuestStampReq request) {
         stampHistoryService.createGuestStampHistory(request);
-        return CommonResponse.successWithoutData(HttpStatus.OK,"비회원 적립 요청이 등록되었습니다.");
+        return CommonResponse.successWithMessage(HttpStatus.OK,"비회원 적립 요청이 등록되었습니다.");
     }
 }

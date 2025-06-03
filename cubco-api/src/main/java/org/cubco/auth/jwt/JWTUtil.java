@@ -1,5 +1,6 @@
 package org.cubco.auth.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class JWTUtil {
         return new Date(getCurrentDate().getTime() + expiredms);
     }
 
+    public Date getQRExpirationDate() {
+        return new Date(getCurrentDate().getTime() + 3 * 60 * 1000L); // 3분
+    }
+
     public Boolean isExpired(String token){
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
@@ -59,5 +64,23 @@ public class JWTUtil {
                 .claim("roles", "ROLE_"+role)
                 .signWith(secretKey)
                 .compact();
+    }
+
+    public String createQRToken(Long cafeId){
+        return Jwts.builder()
+                .setSubject("guest_qr")
+                .claim("cafeId", cafeId)
+                .issuedAt(getCurrentDate())
+                .expiration(getQRExpirationDate())
+                .signWith(secretKey)
+                .compact();
+    }
+
+    public Claims getClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 }

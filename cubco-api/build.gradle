@@ -5,6 +5,12 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0' // Swagger
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA
 
+    implementation 'com.google.zxing:core:3.5.1' // QRCode
+    implementation 'com.google.zxing:javase:3.5.1' // QRCode
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis' // Redis 사용을 위한 의존성
+    implementation 'io.lettuce:lettuce-core' // Lettuce 클라이언트 (기본)
+    implementation 'com.fasterxml.jackson.core:jackson-databind' // Jackson (Redis 저장 값 직렬화에 사용될 수 있음)
 
     implementation project(path: ':cubco-common')
     implementation project(path: ':cubco-domain')
