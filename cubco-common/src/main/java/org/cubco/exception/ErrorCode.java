@@ -15,6 +15,7 @@ public enum ErrorCode {
     INVALID_FILE_EMPTY(HttpStatus.BAD_REQUEST, "INVALID_FILE_EMPTY", "파일이 비어 있습니다."),
     INVALID_IMAGE_URL(HttpStatus.BAD_REQUEST, "INVALID_IMAGE_URL", "잘못된 이미지 URL 입니다."),
     FAIL_DELETE_IMAGE(HttpStatus.BAD_REQUEST, "FAIL_DELETE_IMAGE", "파일 삭제에 실패하였습니다."),
+    INVALID_QR_CODE(HttpStatus.BAD_REQUEST, "INVALID_QR_CODE", "유효하지 않은 QR 코드입니다."),
 
     // 401 Unauthorized
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "인증이 필요합니다."),
@@ -45,6 +46,8 @@ public enum ErrorCode {
     // 409 Conflict
     CONFLICT(HttpStatus.CONFLICT, "CONFLICT", "이미 존재하는 리소스입니다."),
     DUPLICATE_CURATION_LIKE(HttpStatus.CONFLICT, "DUPLICATE_CURATION_LIKE", "해당 큐레이션에 좋아요가 이미 존재합니다."),
+    QR_ALREADY_USED(HttpStatus.CONFLICT, "QR_ALREADY_USED", "이미 사용된 QR 코드입니다."),
+
 
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "서버 내부 오류가 발생했습니다."),

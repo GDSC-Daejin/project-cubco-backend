@@ -3,6 +3,7 @@ package org.cubco.auth.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JWTUtil {
 
@@ -64,23 +66,5 @@ public class JWTUtil {
                 .claim("roles", "ROLE_"+role)
                 .signWith(secretKey)
                 .compact();
-    }
-
-    public String createQRToken(Long cafeId){
-        return Jwts.builder()
-                .setSubject("guest_qr")
-                .claim("cafeId", cafeId)
-                .issuedAt(getCurrentDate())
-                .expiration(getQRExpirationDate())
-                .signWith(secretKey)
-                .compact();
-    }
-
-    public Claims getClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
     }
 }

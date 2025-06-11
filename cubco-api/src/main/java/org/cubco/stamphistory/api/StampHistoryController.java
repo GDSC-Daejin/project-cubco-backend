@@ -1,4 +1,4 @@
-package org.cubco.stamp.api;
+package org.cubco.stamphistory.api;
 
 import lombok.RequiredArgsConstructor;
 import org.cubco.response.CommonResponse;

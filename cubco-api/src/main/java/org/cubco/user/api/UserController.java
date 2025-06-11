@@ -19,4 +19,11 @@ public class UserController {
         UserJwtRes userJwtRes = authService.testLogin();
         return ResponseEntity.ok(userJwtRes);
     }
+
+    // Role이 MANAGER인 유저 생성
+    @PostMapping("/testManager")
+    public ResponseEntity<UserJwtRes> testManagerLogin() {
+        UserJwtRes userJwtRes = authService.testManagerLogin();
+        return ResponseEntity.ok(userJwtRes);
+    }
 }

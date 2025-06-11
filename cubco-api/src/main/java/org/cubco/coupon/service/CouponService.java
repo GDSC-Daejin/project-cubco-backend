@@ -14,6 +14,7 @@ import org.cubco.coupon.repository.CouponRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -29,7 +30,7 @@ public class CouponService {
     public List<CouponRes> getCouponsByUser(Long userId) {
         List<Coupon> coupons = couponRepository.findAllByUserId(userId);
 
-        if (coupons.isEmpty()) throw new CouponNotFoundException();
+        if (coupons.isEmpty()) return Collections.emptyList();
 
         return coupons.stream()
                 .map(CouponRes::of)

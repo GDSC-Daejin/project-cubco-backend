@@ -12,7 +12,6 @@ import org.cubco.coupon.dto.response.CouponRes;
 import org.cubco.coupon.dto.response.CouponUseRes;
 import org.cubco.response.CommonResponse;
 import org.cubco.coupon.service.CouponService;
-import org.cubco.swagger.CouponApiDocs;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

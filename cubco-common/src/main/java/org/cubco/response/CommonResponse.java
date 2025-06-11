@@ -24,12 +24,12 @@ public class CommonResponse<T> {
         return new CommonResponse<>(httpStatus.value(), message, data);
     }
 
-    // 성공 응답 생성 (데이터 없음, 메시지만 있는 경우)
+    // 성공 응답 생성 (메시지만 있는 경우)
     public static CommonResponse<?> successWithMessage(HttpStatus httpStatus, String message) {
         return new CommonResponse<>(httpStatus.value(), message);
     }
 
-    // 성공 응답 생성 (메시지 없음, 데이터만 있는 경우)
+    // 성공 응답 생성 (데이터만 있는 경우)
     public static <T> CommonResponse<T> successWithData(HttpStatus httpStatus, T data) {
         return new CommonResponse<>(httpStatus.value(), data);
     }

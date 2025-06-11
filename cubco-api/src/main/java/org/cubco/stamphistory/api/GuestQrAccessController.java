@@ -12,15 +12,15 @@ import java.nio.file.AccessDeniedException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/stamp-histories/guest/token")
+@RequestMapping("/api/v1/guest-access")
 public class GuestQrAccessController {
 
     private final QRCodeService qrCodeService;
 
-    // 유저가 QR스캔 후 유효성검사,
-    @GetMapping
-    public CommonResponse<?> accessQR(@RequestParam String token) {
-            Long cafeId = qrCodeService.validateAndUseQRToken(token);
+    // QR코드 유효성검사, cafeId 반환
+    @GetMapping("/{qrKey}")
+    public CommonResponse<?> accessQR(@PathVariable String qrKey) {
+            Long cafeId = qrCodeService.validateQR(qrKey);
             return CommonResponse.successWithData(HttpStatus.OK, cafeId);
     }
 }

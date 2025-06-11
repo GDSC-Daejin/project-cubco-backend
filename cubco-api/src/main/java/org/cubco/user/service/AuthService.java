@@ -24,4 +24,13 @@ public class AuthService {
         String token = jwtutil.createToken(user.getId(), user.getRoleType().name());
         return UserJwtRes.of(user.getId(), token);
     }
+
+    public UserJwtRes testManagerLogin() {
+        User user = User.create("test2", "test2@test.com", "010-1234-1234", "서울 강남구", SocialType.TEST, "1", Status.ACTIVE, RoleType.MANAGER);
+        if (userRepository.findByEmail(user.getEmail()).isEmpty()) {
+            userRepository.save(user);
+        }
+        String token = jwtutil.createToken(user.getId(), user.getRoleType().name());
+        return UserJwtRes.of(user.getId(), token);
+    }
 }

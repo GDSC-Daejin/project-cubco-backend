@@ -31,7 +31,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwTutil;
     }
 
-
     private void handleAuthenticationError(HttpServletResponse response, CommonResponse<?> errorResponse) throws IOException {
         response.setStatus(ErrorCode.UNAUTHORIZED.getHttpStatus().value());
         response.setContentType("application/json;charset=UTF-8");
