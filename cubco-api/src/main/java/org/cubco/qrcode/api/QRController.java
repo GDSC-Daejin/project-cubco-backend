@@ -2,7 +2,6 @@ package org.cubco.qrcode.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.cubco.auth.resolver.UserId;
 import org.cubco.qrcode.dto.CafeQrGenerateReq;
 import org.cubco.qrcode.dto.GuestQrRes;
 import org.cubco.qrcode.service.QRCodeService;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/qr")
-public class QRController {
+public class QRController implements QRApiDocs {
 
     private final QRCodeService qrCodeService;
 

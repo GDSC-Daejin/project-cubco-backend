@@ -19,13 +19,12 @@ import java.util.List;
 public interface CouponApiDocs {
 
     // 1. 사용자 보유 쿠폰 리스트 조회
-    @Operation(summary = "사용자 보유 쿠폰 리스트 테스트", description = "사용자가 보유한 쿠폰 리스트들이 잘 조회되는지 확인합니다.")
+    @Operation(summary = "사용자 보유 쿠폰 리스트", description = "사용자가 보유한 쿠폰 리스트들이 잘 조회되는지 확인합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "보유 쿠폰 목록 조회 성공",
                     content = @Content(schema = @Schema(implementation = CouponRes.class))
             ),
             @ApiResponse(responseCode = "401", description = "인증이 필요합니다"),
-            @ApiResponse(responseCode = "404", description = "존재하는 쿠폰을 찾을 수 없습니다."),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류가 발생했습니다.")
     })
     CommonResponse<List<CouponRes>> getUserCoupons(@UserId Long userId);

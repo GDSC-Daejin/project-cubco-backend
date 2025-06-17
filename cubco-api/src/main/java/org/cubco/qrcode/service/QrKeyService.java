@@ -42,7 +42,6 @@ public class QrKeyService {
         String cafeIdStr = Optional.ofNullable(redisTemplate.opsForValue().get(redisKey))
                 .orElseThrow(QRTokenInvalidException::new);
 
-
         return Long.parseLong(cafeIdStr);
     }
 }
