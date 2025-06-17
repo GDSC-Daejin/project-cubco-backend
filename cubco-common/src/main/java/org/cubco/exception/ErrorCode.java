@@ -27,6 +27,7 @@ public enum ErrorCode {
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "ACCESS_DENIED", "이 기능에 접근할 수 없습니다."),
     CURATION_DELETE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "CURATION_DELETE_ACCESS_DENIED", "해당 큐레이션을 삭제할 권한이 없습니다."),
 
+
     // 404 Not Found
     NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND", "요청한 자원이 존재하지 않습니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_NOT_FOUND", "해당 사용자를 찾을 수 없습니다."),
@@ -37,6 +38,7 @@ public enum ErrorCode {
     CURATION_NOT_FOUND(HttpStatus.NOT_FOUND, "CURATION_NOT_FOUND", "큐레이션이 존재하지 않습니다"),
     TAG_NOT_FOUND(HttpStatus.NOT_FOUND, "TAG_NOT_FOUND", "태그가 존재하지 않습니다"),
     LIKE_NOT_FOUND(HttpStatus.NOT_FOUND, "LIKE_NOT_FOUND", "좋아요 내역이 존재하지 않습니다"),
+    HISTORY_NOT_FOUND(HttpStatus.NOT_FOUND, "HISTORY_NOT_FOUND", "해당 적립요청을 찾을 수 없습니다."),
 //    MENU_NOT_FOUND(HttpStatus.NOT_FOUND, "MENU_NOT_FOUND", "해당 메뉴를 찾을 수 없습니다."),
 //    POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_NOT_FOUND", "해당 게시글을 찾을 수 없습니다."),
 

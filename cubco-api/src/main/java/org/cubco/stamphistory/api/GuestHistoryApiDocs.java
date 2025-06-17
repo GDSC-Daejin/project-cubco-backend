@@ -11,7 +11,7 @@ import org.cubco.stamphistory.dto.request.GuestStampReq;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "쿠폰 적립 관련 API", description = "스탬프 적립 관련 API 모음입니다.")
-public interface StampHistoryApiDocs {
+public interface GuestHistoryApiDocs {
 
     @Operation(
             summary = "비회원 스탬프 적립 요청",

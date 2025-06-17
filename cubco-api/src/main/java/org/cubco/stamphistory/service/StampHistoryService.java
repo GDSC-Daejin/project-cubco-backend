@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.cubco.cafe.domain.Cafe;
 import org.cubco.cafe.repository.CafeRepository;
 import org.cubco.exception.cafe.CafeNotFoundException;
+import org.cubco.exception.stamphistory.HistoryForbiddenException;
+import org.cubco.exception.stamphistory.HistoryNotFoundException;
 import org.cubco.exception.user.UserNotFoundException;
 import org.cubco.stamphistory.domain.StampHistory;
 import org.cubco.stamphistory.domain.StampStatus;
 import org.cubco.stamphistory.dto.request.GuestStampReq;
 import org.cubco.stamphistory.dto.request.MemberStampReq;
 import org.cubco.stamphistory.dto.response.MemberStampRes;
+import org.cubco.stamphistory.dto.response.StampHistoryDetailRes;
 import org.cubco.stamphistory.repository.StampHistoryRepository;
 import org.cubco.user.domain.User;
 import org.cubco.user.repository.UserRepository;
@@ -40,6 +43,7 @@ public class StampHistoryService {
         redisTemplate.opsForValue().set("USED_QR_KEY:" + request.getQrKey(), "USED", Duration.ofMinutes(3));
     }
 
+    // 회원 적립요청 생성
     public MemberStampRes createMemberStampRequest(MemberStampReq request) {
         // 1. 전화번호로 유저 조회
         User user = userRepository.findByPhone(request.getPhone())
@@ -58,6 +62,29 @@ public class StampHistoryService {
                 .status(stampHistory.getStatus().name())
                 .createdAt(stampHistory.getCreatedAt())
                 .modifiedAt(stampHistory.getModifiedAt())
+                .build();
+    }
+
+    // 회원 - 적립요청 세부조회
+    public StampHistoryDetailRes getDetailForUser(Long stampHistoryId, Long userId) {
+        // 1. Id에 맞는 요청이 있는지 확인
+        StampHistory history = stampHistoryRepository.findById(stampHistoryId)
+                .orElseThrow(HistoryNotFoundException::new);
+
+        // 2. 요청이 본인이 요청한 것인지 확인
+        if (!history.getUser().getId().equals(userId)) {
+            throw new HistoryForbiddenException(); // 본인 소유 아님
+        }
+
+        return StampHistoryDetailRes.builder()
+                .stampHistoryId(history.getId())
+                .userName(history.getUser().getName())
+                .cafeName(history.getCafe().getName())
+                .cafePhone(history.getUser().getPhone())
+                .status(history.getStatus().name())
+                .createdAt(history.getCreatedAt())
+                .modifiedAt(history.getModifiedAt())
+                .approvedAt(history.getApprovedAt())
                 .build();
     }
 }
