@@ -16,7 +16,6 @@ public class GuestStampReq {
     @Schema(description = "비회원 전화번호 (숫자만 입력, '-' 없이)", example = "01012345678")
     private String phone;
 
-    @NotNull(message = "카페 ID가 비었습니다.")
     @Schema(description = "카페 ID (QR 인증에서 받은 cafeId)", example = "1")
     private Long cafeId;
 

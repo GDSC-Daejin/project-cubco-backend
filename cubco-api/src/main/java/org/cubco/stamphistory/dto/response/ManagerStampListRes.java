@@ -7,19 +7,22 @@ import org.cubco.stamphistory.domain.StampHistory;
 
 import java.time.LocalDateTime;
 
+
 @Builder(access= AccessLevel.PRIVATE)
-public record MemberStampRes (
-    Long historyId,
-    String status,
-    LocalDateTime createdAt,
-    LocalDateTime modifiedAt
+public record ManagerStampListRes (
+        Long historyId,
+        String userName,
+        String userPhone,
+        String status,
+        LocalDateTime createdAt
 ) {
-    public static MemberStampRes of(StampHistory stampHistory) {
-        return MemberStampRes.builder()
+    public static ManagerStampListRes of(StampHistory stampHistory) {
+        return ManagerStampListRes.builder()
                 .historyId(stampHistory.getId())
+                .userName(stampHistory.getUser().getName())
+                .userPhone(stampHistory.getUser().getPhone())
                 .status(stampHistory.getStatus().toString())
                 .createdAt(stampHistory.getCreatedAt())
-                .modifiedAt(stampHistory.getModifiedAt())
                 .build();
     }
 }

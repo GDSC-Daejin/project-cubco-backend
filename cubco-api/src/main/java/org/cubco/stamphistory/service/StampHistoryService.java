@@ -11,15 +11,20 @@ import org.cubco.stamphistory.domain.StampHistory;
 import org.cubco.stamphistory.domain.StampStatus;
 import org.cubco.stamphistory.dto.request.GuestStampReq;
 import org.cubco.stamphistory.dto.request.MemberStampReq;
+import org.cubco.stamphistory.dto.response.ManagerStampListRes;
 import org.cubco.stamphistory.dto.response.MemberStampRes;
 import org.cubco.stamphistory.dto.response.StampHistoryDetailRes;
+import org.cubco.stamphistory.dto.response.StampHistoryListRes;
 import org.cubco.stamphistory.repository.StampHistoryRepository;
 import org.cubco.user.domain.User;
 import org.cubco.user.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -57,34 +62,38 @@ public class StampHistoryService {
         StampHistory history = StampHistory.create(user, cafe, StampStatus.PENDING);
         StampHistory stampHistory = stampHistoryRepository.save(history);
 
-        return MemberStampRes.builder()
-                .stampHistoryId(stampHistory.getId())
-                .status(stampHistory.getStatus().name())
-                .createdAt(stampHistory.getCreatedAt())
-                .modifiedAt(stampHistory.getModifiedAt())
-                .build();
+        return MemberStampRes.of(stampHistory);
     }
 
-    // 회원 - 적립요청 세부조회
+    // USER - 적립요청 세부조회
     public StampHistoryDetailRes getDetailForUser(Long stampHistoryId, Long userId) {
         // 1. Id에 맞는 요청이 있는지 확인
-        StampHistory history = stampHistoryRepository.findById(stampHistoryId)
+        StampHistory stampHistory = stampHistoryRepository.findById(stampHistoryId)
                 .orElseThrow(HistoryNotFoundException::new);
 
         // 2. 요청이 본인이 요청한 것인지 확인
-        if (!history.getUser().getId().equals(userId)) {
+        if (!stampHistory.getUser().getId().equals(userId)) {
             throw new HistoryForbiddenException(); // 본인 소유 아님
         }
 
-        return StampHistoryDetailRes.builder()
-                .stampHistoryId(history.getId())
-                .userName(history.getUser().getName())
-                .cafeName(history.getCafe().getName())
-                .cafePhone(history.getUser().getPhone())
-                .status(history.getStatus().name())
-                .createdAt(history.getCreatedAt())
-                .modifiedAt(history.getModifiedAt())
-                .approvedAt(history.getApprovedAt())
-                .build();
+        return StampHistoryDetailRes.of(stampHistory);
     }
+
+    // USER - 적립요청 리스트 조회
+    public List<StampHistoryListRes> getListForUser(Long userId) {
+        return stampHistoryRepository.findByUserIdOrderByCreatedAtDesc(userId)
+                .stream()
+                .map(StampHistoryListRes::of)
+                .toList();
+    }
+
+    // MANAGER - 적립요청 리스트 조회
+//    public Page<ManagerStampListRes> getStampListForManager(Long managerId, Pageable pageable) {
+//        // 사장님이 소유한 카페 찾기
+//        Cafe cafe = cafeRepository.findByOwnerId(managerId)
+//                .orElseThrow(CafeNotFoundException::new);
+//
+//        return stampHistoryRepository.findByCafeIdOrderByCreatedAtDesc(cafe.getId(), pageable)
+//                .map(ManagerStampListRes::of);
+//    }
 }

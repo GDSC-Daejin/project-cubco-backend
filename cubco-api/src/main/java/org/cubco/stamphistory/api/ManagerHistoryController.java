@@ -6,6 +6,7 @@ import org.cubco.auth.resolver.UserId;
 import org.cubco.response.CommonResponse;
 import org.cubco.stamphistory.dto.request.MemberStampReq;
 import org.cubco.stamphistory.dto.response.MemberStampRes;
+import org.cubco.stamphistory.dto.response.StampHistoryDetailRes;
 import org.cubco.stamphistory.service.StampHistoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
