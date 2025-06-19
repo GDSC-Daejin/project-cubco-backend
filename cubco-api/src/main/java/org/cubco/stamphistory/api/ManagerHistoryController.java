@@ -32,10 +32,9 @@ public class ManagerHistoryController {
     @PreAuthorize("hasRole('MANAGER')")
     public CommonResponse<StampHistoryDetailRes> getDetailForManager(
             @UserId Long managerId,
-            @PathVariable Long id
+            @PathVariable Long historyId
     ) {
-        return CommonResponse.successWithData(
-                stampHistoryService.getDetailForManager(id, managerId)
-        );
+        StampHistoryDetailRes response = stampHistoryService.getDetailForManager(historyId, managerId);
+        return CommonResponse.successWithData(HttpStatus.OK, response);
     }
 }

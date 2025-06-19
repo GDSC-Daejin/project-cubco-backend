@@ -3,6 +3,7 @@ package org.cubco.stamphistory.service;
 import lombok.RequiredArgsConstructor;
 import org.cubco.cafe.domain.Cafe;
 import org.cubco.cafe.repository.CafeRepository;
+import org.cubco.exception.cafe.CafeForbiddenException;
 import org.cubco.exception.cafe.CafeNotFoundException;
 import org.cubco.exception.stamphistory.HistoryForbiddenException;
 import org.cubco.exception.stamphistory.HistoryNotFoundException;
@@ -65,6 +66,14 @@ public class StampHistoryService {
         return MemberStampRes.of(stampHistory);
     }
 
+    // USER - 적립요청 리스트 조회
+    public List<StampHistoryListRes> getListForUser(Long userId) {
+        return stampHistoryRepository.findByUserIdOrderByCreatedAtDesc(userId)
+                .stream()
+                .map(StampHistoryListRes::of)
+                .toList();
+    }
+
     // USER - 적립요청 세부조회
     public StampHistoryDetailRes getDetailForUser(Long stampHistoryId, Long userId) {
         // 1. Id에 맞는 요청이 있는지 확인
@@ -79,14 +88,6 @@ public class StampHistoryService {
         return StampHistoryDetailRes.of(stampHistory);
     }
 
-    // USER - 적립요청 리스트 조회
-    public List<StampHistoryListRes> getListForUser(Long userId) {
-        return stampHistoryRepository.findByUserIdOrderByCreatedAtDesc(userId)
-                .stream()
-                .map(StampHistoryListRes::of)
-                .toList();
-    }
-
     // MANAGER - 적립요청 리스트 조회
 //    public Page<ManagerStampListRes> getStampListForManager(Long managerId, Pageable pageable) {
 //        // 사장님이 소유한 카페 찾기
@@ -95,5 +96,19 @@ public class StampHistoryService {
 //
 //        return stampHistoryRepository.findByCafeIdOrderByCreatedAtDesc(cafe.getId(), pageable)
 //                .map(ManagerStampListRes::of);
+//    }
+
+    // MANAGER - 적립요청 세부조회
+//    public StampHistoryDetailRes getDetailForManager(Long stampHistoryId, Long managerId) {
+//        StampHistory history = stampHistoryRepository.findById(stampHistoryId)
+//                .orElseThrow(HistoryNotFoundException::new);
+//
+//        // 사장님이 소유한 카페의 요청인지 검증
+//        Cafe cafe = history.getCafe();
+//        if (!cafe.getOwner().getId().equals(managerId)) {
+//            throw new CafeForbiddenException();
+//        }
+//
+//        return StampHistoryDetailRes.of(history);
 //    }
 }
