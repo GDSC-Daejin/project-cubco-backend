@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.cubco.response.CommonResponse;
-import org.cubco.stamphistory.dto.request.GuestStampReq;
+import org.cubco.stamphistory.dto.request.user.GuestStampReq;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "쿠폰 적립 관련 API", description = "스탬프 적립 관련 API 모음입니다.")

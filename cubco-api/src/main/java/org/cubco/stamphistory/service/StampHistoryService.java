@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.cubco.cafe.domain.Cafe;
 import org.cubco.cafe.repository.CafeRepository;
 import org.cubco.cafe.service.CafeService;
-import org.cubco.exception.cafe.CafeForbiddenException;
 import org.cubco.exception.cafe.CafeNotFoundException;
 import org.cubco.exception.stamphistory.HistoryAlreadyProcessedException;
 import org.cubco.exception.stamphistory.HistoryForbiddenException;
@@ -12,17 +11,15 @@ import org.cubco.exception.stamphistory.HistoryNotFoundException;
 import org.cubco.exception.user.UserNotFoundException;
 import org.cubco.stamphistory.domain.StampHistory;
 import org.cubco.stamphistory.domain.StampStatus;
-import org.cubco.stamphistory.dto.request.GuestStampReq;
-import org.cubco.stamphistory.dto.request.MemberStampReq;
+import org.cubco.stamphistory.dto.request.user.GuestStampReq;
+import org.cubco.stamphistory.dto.request.user.MemberStampReq;
 import org.cubco.stamphistory.dto.response.ManagerStampListRes;
 import org.cubco.stamphistory.dto.response.MemberStampRes;
 import org.cubco.stamphistory.dto.response.StampHistoryDetailRes;
 import org.cubco.stamphistory.dto.response.StampHistoryListRes;
 import org.cubco.stamphistory.repository.StampHistoryRepository;
-import org.cubco.tag.domain.CafeTag;
 import org.cubco.user.domain.User;
 import org.cubco.user.repository.UserRepository;
-import org.springframework.boot.jdbc.metadata.DataSourcePoolMetadataProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -96,15 +93,17 @@ public class StampHistoryService {
 
     // MANAGER - 적립요청 리스트 조회
     public Page<ManagerStampListRes> getStampListForManager(Long managerId, Long cafeId, Pageable pageable) {
+        // 카페소유자 인지 확인
         cafeService.verifiedCafeForManager(managerId, cafeId);
+
         return stampHistoryRepository.findByCafeIdOrderByCreatedAtDesc(cafeId, pageable)
                 .map(ManagerStampListRes::of);
     }
 
     // MANAGER - 적립요청 세부조회
-    public StampHistoryDetailRes getDetailForManager(Long stampHistoryId, Long managerId) {
+    public StampHistoryDetailRes getDetailForManager(Long historyId, Long managerId) {
         // 세부조회 권한이 있는지 확인
-        StampHistory history = getVerifiedStampForManager(managerId, stampHistoryId);
+        StampHistory history = getVerifiedStampForManager(managerId, historyId);
 
         return StampHistoryDetailRes.of(history);
     }

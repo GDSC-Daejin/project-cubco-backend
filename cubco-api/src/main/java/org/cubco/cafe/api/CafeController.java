@@ -20,6 +20,7 @@ import java.util.List;
 public class CafeController {
     private final CafeService cafeService;
 
+    // 보유한 카페목록 리스트 조회
     @GetMapping("/mine")
     public CommonResponse<List<CafeSimpleRes>> getMyCafes(@UserId Long managerId) {
         List<CafeSimpleRes> response = cafeService.getCafesByManager(managerId);

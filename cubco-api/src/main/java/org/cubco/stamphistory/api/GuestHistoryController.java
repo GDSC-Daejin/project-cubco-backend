@@ -2,7 +2,7 @@ package org.cubco.stamphistory.api;
 
 import lombok.RequiredArgsConstructor;
 import org.cubco.response.CommonResponse;
-import org.cubco.stamphistory.dto.request.GuestStampReq;
+import org.cubco.stamphistory.dto.request.user.GuestStampReq;
 import org.cubco.stamphistory.service.StampHistoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;

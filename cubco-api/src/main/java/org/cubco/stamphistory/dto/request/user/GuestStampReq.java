@@ -1,4 +1,4 @@
-package org.cubco.stamphistory.dto.request;
+package org.cubco.stamphistory.dto.request.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -16,9 +16,11 @@ public class GuestStampReq {
     @Schema(description = "비회원 전화번호 (숫자만 입력, '-' 없이)", example = "01012345678")
     private String phone;
 
+    @NotNull
     @Schema(description = "카페 ID (QR 인증에서 받은 cafeId)", example = "1")
     private Long cafeId;
 
+    @NotNull
     @Schema(description = "QR Key (UUID 형식)", example = "9ad06551-a815-4731-97fe-4114ca9e658a")
     private String qrKey;
 }

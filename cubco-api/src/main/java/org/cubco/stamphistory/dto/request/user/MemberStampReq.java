@@ -1,4 +1,4 @@
-package org.cubco.stamphistory.dto.request;
+package org.cubco.stamphistory.dto.request.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
