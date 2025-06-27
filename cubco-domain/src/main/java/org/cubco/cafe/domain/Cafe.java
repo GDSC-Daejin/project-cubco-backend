@@ -15,6 +15,9 @@ public class Cafe extends BaseTimeEntity {
     @Column(name = "cafe_id")
     private Long id;
 
+    @Column(name= "manager_id")
+    private Long managerId;
+
     @Column(name = "name")
     private String name;
 

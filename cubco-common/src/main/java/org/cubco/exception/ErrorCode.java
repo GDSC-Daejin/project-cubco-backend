@@ -49,7 +49,7 @@ public enum ErrorCode {
     CONFLICT(HttpStatus.CONFLICT, "CONFLICT", "이미 존재하는 리소스입니다."),
     DUPLICATE_CURATION_LIKE(HttpStatus.CONFLICT, "DUPLICATE_CURATION_LIKE", "해당 큐레이션에 좋아요가 이미 존재합니다."),
     QR_ALREADY_USED(HttpStatus.CONFLICT, "QR_ALREADY_USED", "이미 사용된 QR 코드입니다."),
-
+    STAMP_HISTORY_ALREADY_PROCESSED(HttpStatus.CONFLICT, "STAMP_HISTORY_ALREADY_PROCESSED", "이미 처리된 적립요청입니다."),
 
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "서버 내부 오류가 발생했습니다."),

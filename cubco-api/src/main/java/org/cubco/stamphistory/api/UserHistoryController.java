@@ -27,7 +27,7 @@ public class UserHistoryController {
 
     // USER - 유저가 요청한 적립 세부조회
     @GetMapping("/{historyId}")
-    public CommonResponse<StampHistoryDetailRes> getDetail(@UserId Long userId, @PathVariable Long historyId) {
+    public CommonResponse<StampHistoryDetailRes> getDetail(@UserId Long userId, @PathVariable("historyId") Long historyId) {
         return CommonResponse.successWithData(HttpStatus.OK,
                 stampHistoryService.getDetailForUser(historyId, userId)
         );
