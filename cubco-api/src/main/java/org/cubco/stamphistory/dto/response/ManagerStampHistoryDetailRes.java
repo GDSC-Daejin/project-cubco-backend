@@ -2,23 +2,25 @@ package org.cubco.stamphistory.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
 import org.cubco.stamphistory.domain.StampHistory;
 
 import java.time.LocalDateTime;
 
 @Builder(access = AccessLevel.PRIVATE)
-public record StampHistoryListRes(
-        Long historyId,
+public record ManagerStampHistoryDetailRes(
+        Long stampHistoryId,
+        String userName,
         String cafeName,
+        String cafePhone,
         String status,
         LocalDateTime createdAt,
         LocalDateTime modifiedAt,
         LocalDateTime approvedAt
 ) {
-    public static StampHistoryListRes of(StampHistory stampHistory) {
-        return StampHistoryListRes.builder()
-                .historyId(stampHistory.getId())
+    public static ManagerStampHistoryDetailRes of(StampHistory stampHistory) {
+        return ManagerStampHistoryDetailRes.builder()
+                .stampHistoryId(stampHistory.getId())
+                .userName(stampHistory.getUser().getName())
                 .cafeName(stampHistory.getCafe().getName())
                 .status(stampHistory.getStatus().toString())
                 .createdAt(stampHistory.getCreatedAt())

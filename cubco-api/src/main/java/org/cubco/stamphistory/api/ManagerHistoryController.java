@@ -11,7 +11,7 @@ import org.cubco.stamphistory.dto.request.manager.StampHistoryListReq;
 import org.cubco.stamphistory.dto.request.manager.StampHistoryRejectReq;
 import org.cubco.stamphistory.dto.response.ManagerStampListRes;
 import org.cubco.stamphistory.dto.response.MemberStampRes;
-import org.cubco.stamphistory.dto.response.StampHistoryDetailRes;
+import org.cubco.stamphistory.dto.response.ManagerStampHistoryDetailRes;
 import org.cubco.stamphistory.service.StampHistoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,11 +51,11 @@ public class ManagerHistoryController {
     // MANAGER - 적립요청 세부조회
     @GetMapping("/detail")
     @PreAuthorize("hasRole('MANAGER')")
-    public CommonResponse<StampHistoryDetailRes> getDetailForManager(
+    public CommonResponse<ManagerStampHistoryDetailRes> getDetailForManager(
             @UserId Long managerId,
             @RequestBody @Valid StampHistoryDetailReq stampHistoryDetailReq
             ) {
-        StampHistoryDetailRes response = stampHistoryService.getDetailForManager(stampHistoryDetailReq.getStampHistoryId(), managerId);
+        ManagerStampHistoryDetailRes response = stampHistoryService.getDetailForManager(stampHistoryDetailReq.getStampHistoryId(), managerId);
         return CommonResponse.successWithData(HttpStatus.OK, response);
     }
 

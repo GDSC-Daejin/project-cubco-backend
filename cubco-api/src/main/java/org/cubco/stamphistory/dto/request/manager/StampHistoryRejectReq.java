@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StampHistoryRejectReq {
     @NotNull
-    private Long StampHistoryId;
+    private Long stampHistoryId;
 }
