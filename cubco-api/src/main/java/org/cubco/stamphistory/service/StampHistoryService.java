@@ -46,7 +46,7 @@ public class StampHistoryService {
         stampHistoryRepository.save(history);
 
         // QR 사용 처리
-        redisTemplate.opsForValue().set("USED_QR_KEY:" + request.getQrKey(), "USED", Duration.ofMinutes(3));
+        redisTemplate.opsForValue().set("USED_QR_KEY:" + request.getQrKey(), "USED");
     }
 
     // 회원 적립요청 생성

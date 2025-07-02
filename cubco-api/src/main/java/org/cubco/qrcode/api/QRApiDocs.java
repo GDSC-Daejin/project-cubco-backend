@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.cubco.qrcode.dto.CafeQrGenerateReq;
-import org.cubco.qrcode.dto.GuestQrRes;
+import org.cubco.qrcode.dto.request.CafeQrGenerateReq;
+import org.cubco.qrcode.dto.response.GuestQrRes;
 import org.cubco.response.CommonResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 

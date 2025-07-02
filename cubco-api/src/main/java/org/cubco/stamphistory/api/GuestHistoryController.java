@@ -1,6 +1,7 @@
 package org.cubco.stamphistory.api;
 
 import lombok.RequiredArgsConstructor;
+import org.cubco.qrcode.api.GuestQrAccessApiDocs;
 import org.cubco.response.CommonResponse;
 import org.cubco.stamphistory.dto.request.user.GuestStampReq;
 import org.cubco.stamphistory.service.StampHistoryService;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stamp-histories/guest")
-public class GuestHistoryController {
+public class GuestHistoryController implements GuestHistoryApiDocs {
     private final StampHistoryService stampHistoryService;
 
     // 비회원 적립 요청

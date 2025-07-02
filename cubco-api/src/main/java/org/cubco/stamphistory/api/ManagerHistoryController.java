@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stamp-histories/manager")
 @PreAuthorize("hasRole('MANAGER')")
-public class ManagerHistoryController {
+public class ManagerHistoryController implements ManagerHistoryApiDocs{
     private final StampHistoryService stampHistoryService;
 
     // MANAGER - 전화번호 입력 받아 회원 적립 요청 생성

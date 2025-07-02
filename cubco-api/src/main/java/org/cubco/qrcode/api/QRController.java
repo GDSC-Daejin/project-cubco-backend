@@ -2,8 +2,8 @@ package org.cubco.qrcode.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.cubco.qrcode.dto.CafeQrGenerateReq;
-import org.cubco.qrcode.dto.GuestQrRes;
+import org.cubco.qrcode.dto.request.CafeQrGenerateReq;
+import org.cubco.qrcode.dto.response.GuestQrRes;
 import org.cubco.qrcode.service.QRCodeService;
 import org.cubco.response.CommonResponse;
 import org.springframework.http.HttpStatus;

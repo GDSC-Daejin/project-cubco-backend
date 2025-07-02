@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.cubco.auth.resolver.UserId;
 import org.cubco.coupon.dto.response.CouponDetailRes;
 import org.cubco.coupon.dto.request.CouponImageUpdateReq;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+@Tag(name = "쿠폰 관련 API", description = "쿠폰 관련 API 모음입니다.")
 public interface CouponApiDocs {
 
     // 1. 사용자 보유 쿠폰 리스트 조회

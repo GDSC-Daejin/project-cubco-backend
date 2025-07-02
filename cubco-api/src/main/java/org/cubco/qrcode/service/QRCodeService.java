@@ -2,9 +2,9 @@ package org.cubco.qrcode.service;
 
 import lombok.RequiredArgsConstructor;
 import org.cubco.qrcode.QRCodeGenerator;
-import org.cubco.qrcode.dto.CafeQrGenerateReq;
-import org.cubco.qrcode.dto.GuestAccessRes;
-import org.cubco.qrcode.dto.GuestQrRes;
+import org.cubco.qrcode.dto.request.CafeQrGenerateReq;
+import org.cubco.qrcode.dto.response.GuestAccessRes;
+import org.cubco.qrcode.dto.response.GuestQrRes;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 

@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stamp-histories/user")
 @PreAuthorize("hasRole('USER')")
-public class UserHistoryController {
+public class UserHistoryController implements UserHistoryApiDocs{
     private final StampHistoryService stampHistoryService;
 
     // USER - 유저의 요청 목록 조회
