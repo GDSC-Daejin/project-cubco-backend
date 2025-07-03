@@ -2,6 +2,7 @@ package org.cubco.stamphistory.api;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cubco.auth.resolver.UserId;
 import org.cubco.response.CommonResponse;
 import org.cubco.stamphistory.dto.request.user.MemberStampReq;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stamp-histories/manager")
@@ -66,6 +68,8 @@ public class ManagerHistoryController implements ManagerHistoryApiDocs{
             @UserId Long managerId,
             @RequestBody @Valid StampHistoryApproveReq stampHistoryApproveReq
             ) {
+        log.info("적립승인 컨트롤러 실행");
+        log.info("managerId: {}", managerId);
         stampHistoryService.approveStamp(managerId, stampHistoryApproveReq.getStampHistoryId());
         return CommonResponse.successWithMessage(HttpStatus.OK, "적립 요청을 승인했습니다.");
     }

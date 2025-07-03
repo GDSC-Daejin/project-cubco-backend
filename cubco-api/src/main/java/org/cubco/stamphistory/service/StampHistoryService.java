@@ -9,6 +9,8 @@ import org.cubco.exception.stamphistory.HistoryAlreadyProcessedException;
 import org.cubco.exception.stamphistory.HistoryForbiddenException;
 import org.cubco.exception.stamphistory.HistoryNotFoundException;
 import org.cubco.exception.user.UserNotFoundException;
+import org.cubco.firebase.service.FcmService;
+import org.cubco.notification.service.NotificationService;
 import org.cubco.stamphistory.domain.StampHistory;
 import org.cubco.stamphistory.domain.StampStatus;
 import org.cubco.stamphistory.dto.request.user.GuestStampReq;
@@ -35,6 +37,7 @@ public class StampHistoryService {
     private final CafeRepository cafeRepository;
     private final RedisTemplate<String, String> redisTemplate;
     private final CafeService cafeService;
+    private final NotificationService notificationService;
 
     // 비회원 적립요청 생성
     public void createGuestStampHistory(GuestStampReq request) {
@@ -116,6 +119,10 @@ public class StampHistoryService {
         }
 
         history.approve(); // 상태 변경 + 승인시간 설정
+
+        // 알림 발송
+        User user = history.getUser();
+        notificationService.notifyStampApproval(user);
     }
 
     // MANAGER - 적립 거절

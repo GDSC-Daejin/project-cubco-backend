@@ -51,6 +51,9 @@ public class User extends BaseTimeEntity {
     @Column(name = "status")
     private Status status;
 
+    @Column(name = "fcm_token")
+    private String fcmToken;
+
     public static User create(String name, String email, String phone, String city, SocialType socialType, String socialId, Status status, RoleType role) {
         return User.builder()
                 .name(name)
@@ -70,5 +73,9 @@ public class User extends BaseTimeEntity {
                 .roleType(RoleType.GUEST)
                 .status(Status.ACTIVE)
                 .build();
+    }
+
+    public void updateFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

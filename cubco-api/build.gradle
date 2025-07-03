@@ -11,7 +11,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis' // Redis 사용을 위한 의존성
     implementation 'org.apache.commons:commons-lang3:3.12.0' // UUID 생성
 
-    implementation 'com.google.firebase:firebase-admin:9.1.1' // firebase
+    implementation 'com.google.firebase:firebase-admin:9.1.1' // Firebase
 
 
     implementation project(path: ':cubco-common')
