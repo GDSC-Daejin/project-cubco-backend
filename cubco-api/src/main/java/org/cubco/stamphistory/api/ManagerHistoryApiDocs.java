@@ -95,6 +95,7 @@ public interface ManagerHistoryApiDocs {
                     ✅ **[적립 요청 승인 API]**
                     
                     - 사장님이 적립 요청을 승인합니다.
+                    - 적립 받은 손님에게 '큐레이션을 작성하시겠습니까?' 라는 알림 생성
                     
                     **Request Body 필드 설명:**
                     - stampHistoryId: 승인할 적립 요청 ID

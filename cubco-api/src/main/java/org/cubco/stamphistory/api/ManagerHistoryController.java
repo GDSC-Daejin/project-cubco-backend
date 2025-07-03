@@ -68,8 +68,6 @@ public class ManagerHistoryController implements ManagerHistoryApiDocs{
             @UserId Long managerId,
             @RequestBody @Valid StampHistoryApproveReq stampHistoryApproveReq
             ) {
-        log.info("적립승인 컨트롤러 실행");
-        log.info("managerId: {}", managerId);
         stampHistoryService.approveStamp(managerId, stampHistoryApproveReq.getStampHistoryId());
         return CommonResponse.successWithMessage(HttpStatus.OK, "적립 요청을 승인했습니다.");
     }
