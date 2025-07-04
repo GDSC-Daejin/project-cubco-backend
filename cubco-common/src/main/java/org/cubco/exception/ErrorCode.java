@@ -15,6 +15,7 @@ public enum ErrorCode {
     INVALID_FILE_EMPTY(HttpStatus.BAD_REQUEST, "INVALID_FILE_EMPTY", "파일이 비어 있습니다."),
     INVALID_IMAGE_URL(HttpStatus.BAD_REQUEST, "INVALID_IMAGE_URL", "잘못된 이미지 URL 입니다."),
     FAIL_DELETE_IMAGE(HttpStatus.BAD_REQUEST, "FAIL_DELETE_IMAGE", "파일 삭제에 실패하였습니다."),
+    INVALID_QR_CODE(HttpStatus.BAD_REQUEST, "INVALID_QR_CODE", "유효하지 않은 QR 코드입니다."),
 
     // 401 Unauthorized
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "인증이 필요합니다."),
@@ -26,15 +27,18 @@ public enum ErrorCode {
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "ACCESS_DENIED", "이 기능에 접근할 수 없습니다."),
     CURATION_DELETE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "CURATION_DELETE_ACCESS_DENIED", "해당 큐레이션을 삭제할 권한이 없습니다."),
 
+
     // 404 Not Found
     NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND", "요청한 자원이 존재하지 않습니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_NOT_FOUND", "해당 사용자를 찾을 수 없습니다."),
     COUPON_NOT_FOUND(HttpStatus.NOT_FOUND, "COUPON_NOT_FOUND", "존재하는 쿠폰을 찾을 수 없습니다."),
+    CAFE_NOT_FOUND(HttpStatus.NOT_FOUND, "CAFE_NOT_FOUND", "해당 카페를 찾을 수 없습니다."),
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "ENTITY_NOT_FOUND", "대상을 찾을 수 없습니다."),
     IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "IMAGE_NOT_FOUND", "해당 이미지가 존재하지 않습니다"),
     CURATION_NOT_FOUND(HttpStatus.NOT_FOUND, "CURATION_NOT_FOUND", "큐레이션이 존재하지 않습니다"),
     TAG_NOT_FOUND(HttpStatus.NOT_FOUND, "TAG_NOT_FOUND", "태그가 존재하지 않습니다"),
     LIKE_NOT_FOUND(HttpStatus.NOT_FOUND, "LIKE_NOT_FOUND", "좋아요 내역이 존재하지 않습니다"),
+    HISTORY_NOT_FOUND(HttpStatus.NOT_FOUND, "HISTORY_NOT_FOUND", "해당 적립요청을 찾을 수 없습니다."),
 //    MENU_NOT_FOUND(HttpStatus.NOT_FOUND, "MENU_NOT_FOUND", "해당 메뉴를 찾을 수 없습니다."),
 //    POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_NOT_FOUND", "해당 게시글을 찾을 수 없습니다."),
 
@@ -44,6 +48,8 @@ public enum ErrorCode {
     // 409 Conflict
     CONFLICT(HttpStatus.CONFLICT, "CONFLICT", "이미 존재하는 리소스입니다."),
     DUPLICATE_CURATION_LIKE(HttpStatus.CONFLICT, "DUPLICATE_CURATION_LIKE", "해당 큐레이션에 좋아요가 이미 존재합니다."),
+    QR_ALREADY_USED(HttpStatus.CONFLICT, "QR_ALREADY_USED", "이미 사용된 QR 코드입니다."),
+    STAMP_HISTORY_ALREADY_PROCESSED(HttpStatus.CONFLICT, "STAMP_HISTORY_ALREADY_PROCESSED", "이미 처리된 적립요청입니다."),
 
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "서버 내부 오류가 발생했습니다."),

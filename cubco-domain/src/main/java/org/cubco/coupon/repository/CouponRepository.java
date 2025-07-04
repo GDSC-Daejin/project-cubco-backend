@@ -1,6 +1,7 @@
-package org.cubco.repository;
+package org.cubco.coupon.repository;
 
 import org.cubco.coupon.domain.Coupon;
+
 import java.util.List;
 import java.util.Optional;
 

@@ -1,7 +1,9 @@
 package org.cubco.auth.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JWTUtil {
 
@@ -35,6 +38,10 @@ public class JWTUtil {
 
     public Date getExpirationDate() {
         return new Date(getCurrentDate().getTime() + expiredms);
+    }
+
+    public Date getQRExpirationDate() {
+        return new Date(getCurrentDate().getTime() + 3 * 60 * 1000L); // 3분
     }
 
     public Boolean isExpired(String token){

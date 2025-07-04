@@ -1,7 +1,7 @@
 package org.cubco.policy;
 
 import org.cubco.coupon.domain.Coupon;
-import org.cubco.exception.CouponForbiddenException;
+import org.cubco.exception.coupon.CouponForbiddenException;
 import org.springframework.stereotype.Component;
 
 @Component

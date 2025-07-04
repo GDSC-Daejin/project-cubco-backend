@@ -3,14 +3,14 @@ package org.cubco.coupon.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cubco.coupon.domain.Coupon;
-import org.cubco.coupon.dto.response.CouponDetailResponse;
-import org.cubco.coupon.dto.response.CouponImageUpdateResponse;
-import org.cubco.coupon.dto.response.CouponResponse;
-import org.cubco.coupon.dto.response.CouponUseResponse;
-import org.cubco.exception.CouponNotFoundException;
+import org.cubco.coupon.dto.response.CouponDetailRes;
+import org.cubco.coupon.dto.response.CouponImageUpdateRes;
+import org.cubco.coupon.dto.response.CouponRes;
+import org.cubco.coupon.dto.response.CouponUseRes;
+import org.cubco.exception.coupon.CouponNotFoundException;
 import org.cubco.policy.CouponOwnershipPolicy;
 import org.cubco.policy.CouponRemainingCountPolicy;
-import org.cubco.repository.CouponRepository;
+import org.cubco.coupon.repository.CouponRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,27 +27,27 @@ public class CouponService {
     private final CouponOwnershipPolicy ownershipPolicy;
 
     // [1] 사용자 보유 쿠폰 목록 조회
-    public List<CouponResponse> getCouponsByUser(Long userId) {
+    public List<CouponRes> getCouponsByUser(Long userId) {
         List<Coupon> coupons = couponRepository.findAllByUserId(userId);
 
         if (coupons.isEmpty()) return Collections.emptyList();
 
         return coupons.stream()
-                .map(CouponResponse::of)
+                .map(CouponRes::of)
                 .toList();
     }
 
     // [2] 쿠폰 상세 조회
-    public CouponDetailResponse getCouponDetail(Long userId, Long couponId) {
+    public CouponDetailRes getCouponDetail(Long userId, Long couponId) {
         Coupon coupon = couponRepository.findByUserIdAndId(userId, couponId)
                 .orElseThrow(() -> new CouponNotFoundException());
 
-        return CouponDetailResponse.of(coupon);
+        return CouponDetailRes.of(coupon);
     }
 
     // [3] 쿠폰 이미지 수정
     @Transactional
-    public CouponImageUpdateResponse updateCouponImage(Long userId, Long couponId, String imageUrl) {
+    public CouponImageUpdateRes updateCouponImage(Long userId, Long couponId, String imageUrl) {
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new CouponNotFoundException());
 
@@ -56,12 +56,12 @@ public class CouponService {
 
         coupon.updateImage(imageUrl);
 
-        return CouponImageUpdateResponse.of(coupon);
+        return CouponImageUpdateRes.of(coupon);
     }
 
     // [4] 쿠폰 사용 처리 (count 차감)
     @Transactional
-    public CouponUseResponse useCoupon(Long userId, Long couponId, int count) {
+    public CouponUseRes useCoupon(Long userId, Long couponId, int count) {
         Coupon coupon = couponRepository.findByUserIdAndId(userId, couponId)
                 .orElseThrow(() -> new CouponNotFoundException());
 
@@ -71,7 +71,7 @@ public class CouponService {
         countPolicy.validateCouponCount(coupon, count);
 
         coupon.updateCount(count);
-        return CouponUseResponse.of(coupon);
+        return CouponUseRes.of(coupon);
     }
 
 }

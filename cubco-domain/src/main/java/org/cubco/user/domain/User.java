@@ -16,11 +16,9 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @NotNull
     @Column(name = "name")
     private String name;
 
-    @NotNull
     @Column(name = "email")
     private String email;
 
@@ -28,7 +26,6 @@ public class User extends BaseTimeEntity {
     @Column(name = "phone")
     private String phone;
 
-    @NotNull
     @Column(name = "city")
     private String city;
 
@@ -37,7 +34,6 @@ public class User extends BaseTimeEntity {
     @Column(name = "report_count")
     private int reportCount = 0;
 
-    @NotNull
     @Column(name = "social_id")
     private String socialId;
 
@@ -47,7 +43,6 @@ public class User extends BaseTimeEntity {
     private RoleType roleType;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     @Column(name = "social_type")
     private SocialType socialType;
 
@@ -55,6 +50,9 @@ public class User extends BaseTimeEntity {
     @NotNull
     @Column(name = "status")
     private Status status;
+
+    @Column(name = "fcm_token")
+    private String fcmToken;
 
     public static User create(String name, String email, String phone, String city, SocialType socialType, String socialId, Status status, RoleType role) {
         return User.builder()
@@ -67,5 +65,17 @@ public class User extends BaseTimeEntity {
                 .status(status)
                 .roleType(role)
                 .build();
+    }
+
+    public static User createGuest(String phone) {
+        return User.builder()
+                .phone(phone)
+                .roleType(RoleType.GUEST)
+                .status(Status.ACTIVE)
+                .build();
+    }
+
+    public void updateFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

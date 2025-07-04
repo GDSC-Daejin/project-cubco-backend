@@ -48,4 +48,15 @@ public class StampHistory extends BaseTimeEntity {
                 .status(status)
                 .build();
     }
+
+    public void approve() {
+        this.status = StampStatus.ACCEPTED;
+        this.approvedAt = LocalDateTime.now();
+    }
+
+    public void reject() {
+        this.status = StampStatus.REJECTED;
+        this.approvedAt = LocalDateTime.now();
+    }
+
 }
